@@ -21,14 +21,14 @@
       <entry name="AVIANT_INDICATOR_STATE_WARNING" value="2"/>
       <entry name="AVIANT_INDICATOR_STATE_CRITICAL" value="3"/>
     </enum>
-    <enum name="AVIANT_NAVIGATION_REDUNDANCY_STATE">
+    <enum name="AVIANT_NAV_REDUNDANCY_STATE">
       <description>Navigation redundancy state</description>
       <entry name="AVIANT_NAV_REDUNDANCY_STATE_UNKNOWN" value="0"/>
       <entry name="AVIANT_NAV_REDUNDANCY_STATE_REDUNDANT" value="1"/>
       <entry name="AVIANT_NAV_REDUNDANCY_STATE_SINGLE" value="2"/>
       <entry name="AVIANT_NAV_REDUNDANCY_STATE_FAILED" value="3"/>
     </enum>
-    <enum name="AVIANT_NAVIGATION_ACCURACY_STATE">
+    <enum name="AVIANT_NAV_ACCURACY_STATE">
       <description>Navigation accuracy state</description>
       <entry name="AVIANT_NAV_ACCURACY_STATE_UNKNOWN" value="0"/>
       <entry name="AVIANT_NAV_ACCURACY_STATE_ACCURATE" value="1"/>
@@ -52,8 +52,8 @@
     </message>
     <message name="AVIANT_NAVIGATION" id="59002">
       <description>Navigation indicators</description>
-      <field name="accuracy" type="uint8_t" enum="AVIANT_NAVIGATION_ACCURACY_STATE">Absolute position accuracy</field>
-      <field name="redundancy" type="uint8_t" enum="AVIANT_NAVIGATION_REDUNDANCY_STATE">Navigation sensor redundancy</field>
+      <field name="accuracy" type="uint8_t" enum="AVIANT_NAV_ACCURACY_STATE">Absolute position accuracy</field>
+      <field name="redundancy" type="uint8_t" enum="AVIANT_NAV_REDUNDANCY_STATE">Navigation sensor redundancy</field>
     </message>
     <message name="AVIANT_INDICATOR_MR_THRUST" id="59003">
       <description>Top motor thrust levels</description>
