@@ -88,5 +88,19 @@
       <field name="baro_internal_state" type="uint8_t" enum="AVIANT_INDICATOR_STATE">Barometer internal temperature status</field>
       <field name="baro_internal" type="int8_t" units="degC">Barometer internal temperature</field>
     </message>
+    <message name="AVIANT_TRN_TEST_DATA" id="59700">
+      <description>Position and attitude estimates from a GNSS-denied EKF instance for TRN testing</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot)</field>
+      <field type="float" name="x" units="m">X Position in NED frame</field>
+      <field type="float" name="y" units="m">Y Position in NED frame</field>
+      <field type="float" name="z" units="m">Z Position in NED frame (negative altitude)</field>
+      <field type="float" name="vx" units="m/s">X Velocity in NED frame</field>
+      <field type="float" name="vy" units="m/s">Y Velocity in NED frame</field>
+      <field type="float" name="vz" units="m/s">Z Velocity in NED frame</field>
+      <field type="float" name="q1">Quaternion component w (scalar)</field>
+      <field type="float" name="q2">Quaternion component x</field>
+      <field type="float" name="q3">Quaternion component y</field>
+      <field type="float" name="q4">Quaternion component z</field>
+    </message>
   </messages>
 </mavlink>
