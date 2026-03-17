@@ -10,7 +10,7 @@
     #error Wrong include order: MAVLINK_AVIANT.H MUST NOT BE DIRECTLY USED. Include mavlink.h from the same directory instead or set ALL AND EVERY defines from MAVLINK.H manually accordingly, including the #define MAVLINK_H call.
 #endif
 
-#define MAVLINK_AVIANT_XML_HASH 8662625974556012091
+#define MAVLINK_AVIANT_XML_HASH 7211756865509770102
 
 #ifdef __cplusplus
 extern "C" {
@@ -94,7 +94,8 @@ typedef enum AVIANT_ATS_STATUS_FLAGS
    POWER_LOSS=16, /*  | */
    REBOOTED_WHILE_ARMED=32, /*  | */
    PARACHUTE_DEPLOY=64, /*  | */
-   AVIANT_ATS_STATUS_FLAGS_ENUM_END=65, /*  | */
+   UPS_UNHEALTHY=128, /*  | */
+   AVIANT_ATS_STATUS_FLAGS_ENUM_END=129, /*  | */
 } AVIANT_ATS_STATUS_FLAGS;
 #endif
 
