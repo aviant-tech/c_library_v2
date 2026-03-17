@@ -7,16 +7,19 @@
 typedef struct __mavlink_aviant_ats_status_t {
  uint32_t time_boot_ms; /*< [ms] Timestamp (time since system boot).*/
  uint32_t ats_status_flags; /*<  ATS Status flags*/
+ float main_voltage1; /*< [V] Main voltage measurement 1*/
+ float main_voltage2; /*< [V] Main voltage measurement 2*/
+ float ups_voltage; /*< [V] UPS voltage measurement*/
  uint8_t fc_state; /*<  fc_state, see uorb message*/
 } mavlink_aviant_ats_status_t;
 
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN 9
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN 9
-#define MAVLINK_MSG_ID_59026_LEN 9
-#define MAVLINK_MSG_ID_59026_MIN_LEN 9
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN 21
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN 21
+#define MAVLINK_MSG_ID_59026_LEN 21
+#define MAVLINK_MSG_ID_59026_MIN_LEN 21
 
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 34
-#define MAVLINK_MSG_ID_59026_CRC 34
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 1
+#define MAVLINK_MSG_ID_59026_CRC 1
 
 
 
@@ -24,19 +27,25 @@ typedef struct __mavlink_aviant_ats_status_t {
 #define MAVLINK_MESSAGE_INFO_AVIANT_ATS_STATUS { \
     59026, \
     "AVIANT_ATS_STATUS", \
-    3, \
+    6, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_aviant_ats_status_t, time_boot_ms) }, \
-         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
+         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
+         { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
+         { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
+         { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_AVIANT_ATS_STATUS { \
     "AVIANT_ATS_STATUS", \
-    3, \
+    6, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_aviant_ats_status_t, time_boot_ms) }, \
-         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
+         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
+         { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
+         { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
+         { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
          } \
 }
 #endif
@@ -50,22 +59,31 @@ typedef struct __mavlink_aviant_ats_status_t {
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
+ * @param main_voltage1 [V] Main voltage measurement 1
+ * @param main_voltage2 [V] Main voltage measurement 2
+ * @param ups_voltage [V] UPS voltage measurement
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags)
+                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
     _mav_put_uint32_t(buf, 0, time_boot_ms);
     _mav_put_uint32_t(buf, 4, ats_status_flags);
-    _mav_put_uint8_t(buf, 8, fc_state);
+    _mav_put_float(buf, 8, main_voltage1);
+    _mav_put_float(buf, 12, main_voltage2);
+    _mav_put_float(buf, 16, ups_voltage);
+    _mav_put_uint8_t(buf, 20, fc_state);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
     mavlink_aviant_ats_status_t packet;
     packet.time_boot_ms = time_boot_ms;
     packet.ats_status_flags = ats_status_flags;
+    packet.main_voltage1 = main_voltage1;
+    packet.main_voltage2 = main_voltage2;
+    packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
@@ -85,22 +103,31 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
+ * @param main_voltage1 [V] Main voltage measurement 1
+ * @param main_voltage2 [V] Main voltage measurement 2
+ * @param ups_voltage [V] UPS voltage measurement
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags)
+                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
     _mav_put_uint32_t(buf, 0, time_boot_ms);
     _mav_put_uint32_t(buf, 4, ats_status_flags);
-    _mav_put_uint8_t(buf, 8, fc_state);
+    _mav_put_float(buf, 8, main_voltage1);
+    _mav_put_float(buf, 12, main_voltage2);
+    _mav_put_float(buf, 16, ups_voltage);
+    _mav_put_uint8_t(buf, 20, fc_state);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
     mavlink_aviant_ats_status_t packet;
     packet.time_boot_ms = time_boot_ms;
     packet.ats_status_flags = ats_status_flags;
+    packet.main_voltage1 = main_voltage1;
+    packet.main_voltage2 = main_voltage2;
+    packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
@@ -123,23 +150,32 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
+ * @param main_voltage1 [V] Main voltage measurement 1
+ * @param main_voltage2 [V] Main voltage measurement 2
+ * @param ups_voltage [V] UPS voltage measurement
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint8_t fc_state,uint32_t ats_status_flags)
+                                   uint32_t time_boot_ms,uint8_t fc_state,uint32_t ats_status_flags,float main_voltage1,float main_voltage2,float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
     _mav_put_uint32_t(buf, 0, time_boot_ms);
     _mav_put_uint32_t(buf, 4, ats_status_flags);
-    _mav_put_uint8_t(buf, 8, fc_state);
+    _mav_put_float(buf, 8, main_voltage1);
+    _mav_put_float(buf, 12, main_voltage2);
+    _mav_put_float(buf, 16, ups_voltage);
+    _mav_put_uint8_t(buf, 20, fc_state);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
     mavlink_aviant_ats_status_t packet;
     packet.time_boot_ms = time_boot_ms;
     packet.ats_status_flags = ats_status_flags;
+    packet.main_voltage1 = main_voltage1;
+    packet.main_voltage2 = main_voltage2;
+    packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
@@ -159,7 +195,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags);
+    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -173,7 +209,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, u
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags);
+    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -187,7 +223,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags);
+    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -197,22 +233,31 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t syste
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
+ * @param main_voltage1 [V] Main voltage measurement 1
+ * @param main_voltage2 [V] Main voltage measurement 2
+ * @param ups_voltage [V] UPS voltage measurement
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags)
+static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
     _mav_put_uint32_t(buf, 0, time_boot_ms);
     _mav_put_uint32_t(buf, 4, ats_status_flags);
-    _mav_put_uint8_t(buf, 8, fc_state);
+    _mav_put_float(buf, 8, main_voltage1);
+    _mav_put_float(buf, 12, main_voltage2);
+    _mav_put_float(buf, 16, ups_voltage);
+    _mav_put_uint8_t(buf, 20, fc_state);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
     mavlink_aviant_ats_status_t packet;
     packet.time_boot_ms = time_boot_ms;
     packet.ats_status_flags = ats_status_flags;
+    packet.main_voltage1 = main_voltage1;
+    packet.main_voltage2 = main_voltage2;
+    packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)&packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
@@ -227,7 +272,7 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
 static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t chan, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags);
+    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)aviant_ats_status, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #endif
@@ -241,19 +286,25 @@ static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t c
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags)
+static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint32_t(buf, 0, time_boot_ms);
     _mav_put_uint32_t(buf, 4, ats_status_flags);
-    _mav_put_uint8_t(buf, 8, fc_state);
+    _mav_put_float(buf, 8, main_voltage1);
+    _mav_put_float(buf, 12, main_voltage2);
+    _mav_put_float(buf, 16, ups_voltage);
+    _mav_put_uint8_t(buf, 20, fc_state);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
     mavlink_aviant_ats_status_t *packet = (mavlink_aviant_ats_status_t *)msgbuf;
     packet->time_boot_ms = time_boot_ms;
     packet->ats_status_flags = ats_status_flags;
+    packet->main_voltage1 = main_voltage1;
+    packet->main_voltage2 = main_voltage2;
+    packet->ups_voltage = ups_voltage;
     packet->fc_state = fc_state;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
@@ -283,7 +334,7 @@ static inline uint32_t mavlink_msg_aviant_ats_status_get_time_boot_ms(const mavl
  */
 static inline uint8_t mavlink_msg_aviant_ats_status_get_fc_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  8);
+    return _MAV_RETURN_uint8_t(msg,  20);
 }
 
 /**
@@ -297,6 +348,36 @@ static inline uint32_t mavlink_msg_aviant_ats_status_get_ats_status_flags(const 
 }
 
 /**
+ * @brief Get field main_voltage1 from aviant_ats_status message
+ *
+ * @return [V] Main voltage measurement 1
+ */
+static inline float mavlink_msg_aviant_ats_status_get_main_voltage1(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_float(msg,  8);
+}
+
+/**
+ * @brief Get field main_voltage2 from aviant_ats_status message
+ *
+ * @return [V] Main voltage measurement 2
+ */
+static inline float mavlink_msg_aviant_ats_status_get_main_voltage2(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_float(msg,  12);
+}
+
+/**
+ * @brief Get field ups_voltage from aviant_ats_status message
+ *
+ * @return [V] UPS voltage measurement
+ */
+static inline float mavlink_msg_aviant_ats_status_get_ups_voltage(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_float(msg,  16);
+}
+
+/**
  * @brief Decode a aviant_ats_status message into a struct
  *
  * @param msg The message to decode
@@ -307,6 +388,9 @@ static inline void mavlink_msg_aviant_ats_status_decode(const mavlink_message_t*
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     aviant_ats_status->time_boot_ms = mavlink_msg_aviant_ats_status_get_time_boot_ms(msg);
     aviant_ats_status->ats_status_flags = mavlink_msg_aviant_ats_status_get_ats_status_flags(msg);
+    aviant_ats_status->main_voltage1 = mavlink_msg_aviant_ats_status_get_main_voltage1(msg);
+    aviant_ats_status->main_voltage2 = mavlink_msg_aviant_ats_status_get_main_voltage2(msg);
+    aviant_ats_status->ups_voltage = mavlink_msg_aviant_ats_status_get_ups_voltage(msg);
     aviant_ats_status->fc_state = mavlink_msg_aviant_ats_status_get_fc_state(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN? msg->len : MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN;
