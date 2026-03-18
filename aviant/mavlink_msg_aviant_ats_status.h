@@ -10,18 +10,19 @@ typedef struct __mavlink_aviant_ats_status_t {
  float main_voltage1; /*< [V] Main voltage measurement 1*/
  float main_voltage2; /*< [V] Main voltage measurement 2*/
  float ups_voltage; /*< [V] UPS voltage measurement*/
- uint8_t fc_state; /*<  fc_state, see uorb message*/
+ uint8_t fc_armed; /*<  Is the flight controller armed?*/
+ uint8_t fc_flight_termination; /*<  Is the flight controller in flight termination?*/
  uint8_t power_loss_trigger_enabled; /*<  Power loss trigger enabled*/
  uint8_t ats_enabled; /*<  ATS enabled*/
 } mavlink_aviant_ats_status_t;
 
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN 23
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN 23
-#define MAVLINK_MSG_ID_59026_LEN 23
-#define MAVLINK_MSG_ID_59026_MIN_LEN 23
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN 24
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN 24
+#define MAVLINK_MSG_ID_59026_LEN 24
+#define MAVLINK_MSG_ID_59026_MIN_LEN 24
 
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 119
-#define MAVLINK_MSG_ID_59026_CRC 119
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 252
+#define MAVLINK_MSG_ID_59026_CRC 252
 
 
 
@@ -29,12 +30,13 @@ typedef struct __mavlink_aviant_ats_status_t {
 #define MAVLINK_MESSAGE_INFO_AVIANT_ATS_STATUS { \
     59026, \
     "AVIANT_ATS_STATUS", \
-    8, \
+    9, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_aviant_ats_status_t, time_boot_ms) }, \
-         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
+         { "fc_armed", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_armed) }, \
+         { "fc_flight_termination", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, fc_flight_termination) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
-         { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
-         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
+         { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
+         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
          { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
          { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
          { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
@@ -43,12 +45,13 @@ typedef struct __mavlink_aviant_ats_status_t {
 #else
 #define MAVLINK_MESSAGE_INFO_AVIANT_ATS_STATUS { \
     "AVIANT_ATS_STATUS", \
-    8, \
+    9, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_aviant_ats_status_t, time_boot_ms) }, \
-         { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
+         { "fc_armed", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_armed) }, \
+         { "fc_flight_termination", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, fc_flight_termination) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
-         { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
-         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
+         { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
+         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
          { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
          { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
          { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
@@ -63,7 +66,8 @@ typedef struct __mavlink_aviant_ats_status_t {
  * @param msg The MAVLink message to compress the data into
  *
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param fc_state  fc_state, see uorb message
+ * @param fc_armed  Is the flight controller armed?
+ * @param fc_flight_termination  Is the flight controller in flight termination?
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
  * @param ats_enabled  ATS enabled
@@ -73,7 +77,7 @@ typedef struct __mavlink_aviant_ats_status_t {
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
+                               uint32_t time_boot_ms, uint8_t fc_armed, uint8_t fc_flight_termination, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -82,9 +86,10 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
     _mav_put_float(buf, 8, main_voltage1);
     _mav_put_float(buf, 12, main_voltage2);
     _mav_put_float(buf, 16, ups_voltage);
-    _mav_put_uint8_t(buf, 20, fc_state);
-    _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_enabled);
+    _mav_put_uint8_t(buf, 20, fc_armed);
+    _mav_put_uint8_t(buf, 21, fc_flight_termination);
+    _mav_put_uint8_t(buf, 22, power_loss_trigger_enabled);
+    _mav_put_uint8_t(buf, 23, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -94,7 +99,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
     packet.main_voltage1 = main_voltage1;
     packet.main_voltage2 = main_voltage2;
     packet.ups_voltage = ups_voltage;
-    packet.fc_state = fc_state;
+    packet.fc_armed = fc_armed;
+    packet.fc_flight_termination = fc_flight_termination;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
     packet.ats_enabled = ats_enabled;
 
@@ -113,7 +119,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
  * @param msg The MAVLink message to compress the data into
  *
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param fc_state  fc_state, see uorb message
+ * @param fc_armed  Is the flight controller armed?
+ * @param fc_flight_termination  Is the flight controller in flight termination?
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
  * @param ats_enabled  ATS enabled
@@ -123,7 +130,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
+                               uint32_t time_boot_ms, uint8_t fc_armed, uint8_t fc_flight_termination, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -132,9 +139,10 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
     _mav_put_float(buf, 8, main_voltage1);
     _mav_put_float(buf, 12, main_voltage2);
     _mav_put_float(buf, 16, ups_voltage);
-    _mav_put_uint8_t(buf, 20, fc_state);
-    _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_enabled);
+    _mav_put_uint8_t(buf, 20, fc_armed);
+    _mav_put_uint8_t(buf, 21, fc_flight_termination);
+    _mav_put_uint8_t(buf, 22, power_loss_trigger_enabled);
+    _mav_put_uint8_t(buf, 23, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -144,7 +152,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
     packet.main_voltage1 = main_voltage1;
     packet.main_voltage2 = main_voltage2;
     packet.ups_voltage = ups_voltage;
-    packet.fc_state = fc_state;
+    packet.fc_armed = fc_armed;
+    packet.fc_flight_termination = fc_flight_termination;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
     packet.ats_enabled = ats_enabled;
 
@@ -166,7 +175,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param fc_state  fc_state, see uorb message
+ * @param fc_armed  Is the flight controller armed?
+ * @param fc_flight_termination  Is the flight controller in flight termination?
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
  * @param ats_enabled  ATS enabled
@@ -177,7 +187,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint8_t fc_state,uint32_t ats_status_flags,uint8_t power_loss_trigger_enabled,uint8_t ats_enabled,float main_voltage1,float main_voltage2,float ups_voltage)
+                                   uint32_t time_boot_ms,uint8_t fc_armed,uint8_t fc_flight_termination,uint32_t ats_status_flags,uint8_t power_loss_trigger_enabled,uint8_t ats_enabled,float main_voltage1,float main_voltage2,float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -186,9 +196,10 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
     _mav_put_float(buf, 8, main_voltage1);
     _mav_put_float(buf, 12, main_voltage2);
     _mav_put_float(buf, 16, ups_voltage);
-    _mav_put_uint8_t(buf, 20, fc_state);
-    _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_enabled);
+    _mav_put_uint8_t(buf, 20, fc_armed);
+    _mav_put_uint8_t(buf, 21, fc_flight_termination);
+    _mav_put_uint8_t(buf, 22, power_loss_trigger_enabled);
+    _mav_put_uint8_t(buf, 23, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -198,7 +209,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
     packet.main_voltage1 = main_voltage1;
     packet.main_voltage2 = main_voltage2;
     packet.ups_voltage = ups_voltage;
-    packet.fc_state = fc_state;
+    packet.fc_armed = fc_armed;
+    packet.fc_flight_termination = fc_flight_termination;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
     packet.ats_enabled = ats_enabled;
 
@@ -219,7 +231,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_armed, aviant_ats_status->fc_flight_termination, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -233,7 +245,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, u
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_armed, aviant_ats_status->fc_flight_termination, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -247,7 +259,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_armed, aviant_ats_status->fc_flight_termination, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -255,7 +267,8 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t syste
  * @param chan MAVLink channel to send the message
  *
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param fc_state  fc_state, see uorb message
+ * @param fc_armed  Is the flight controller armed?
+ * @param fc_flight_termination  Is the flight controller in flight termination?
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
  * @param ats_enabled  ATS enabled
@@ -265,7 +278,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t syste
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
+static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_armed, uint8_t fc_flight_termination, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -274,9 +287,10 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
     _mav_put_float(buf, 8, main_voltage1);
     _mav_put_float(buf, 12, main_voltage2);
     _mav_put_float(buf, 16, ups_voltage);
-    _mav_put_uint8_t(buf, 20, fc_state);
-    _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_enabled);
+    _mav_put_uint8_t(buf, 20, fc_armed);
+    _mav_put_uint8_t(buf, 21, fc_flight_termination);
+    _mav_put_uint8_t(buf, 22, power_loss_trigger_enabled);
+    _mav_put_uint8_t(buf, 23, ats_enabled);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
@@ -286,7 +300,8 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
     packet.main_voltage1 = main_voltage1;
     packet.main_voltage2 = main_voltage2;
     packet.ups_voltage = ups_voltage;
-    packet.fc_state = fc_state;
+    packet.fc_armed = fc_armed;
+    packet.fc_flight_termination = fc_flight_termination;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
     packet.ats_enabled = ats_enabled;
 
@@ -302,7 +317,7 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
 static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t chan, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_armed, aviant_ats_status->fc_flight_termination, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)aviant_ats_status, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #endif
@@ -316,7 +331,7 @@ static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t c
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
+static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_armed, uint8_t fc_flight_termination, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -325,9 +340,10 @@ static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msg
     _mav_put_float(buf, 8, main_voltage1);
     _mav_put_float(buf, 12, main_voltage2);
     _mav_put_float(buf, 16, ups_voltage);
-    _mav_put_uint8_t(buf, 20, fc_state);
-    _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_enabled);
+    _mav_put_uint8_t(buf, 20, fc_armed);
+    _mav_put_uint8_t(buf, 21, fc_flight_termination);
+    _mav_put_uint8_t(buf, 22, power_loss_trigger_enabled);
+    _mav_put_uint8_t(buf, 23, ats_enabled);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
@@ -337,7 +353,8 @@ static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msg
     packet->main_voltage1 = main_voltage1;
     packet->main_voltage2 = main_voltage2;
     packet->ups_voltage = ups_voltage;
-    packet->fc_state = fc_state;
+    packet->fc_armed = fc_armed;
+    packet->fc_flight_termination = fc_flight_termination;
     packet->power_loss_trigger_enabled = power_loss_trigger_enabled;
     packet->ats_enabled = ats_enabled;
 
@@ -362,13 +379,23 @@ static inline uint32_t mavlink_msg_aviant_ats_status_get_time_boot_ms(const mavl
 }
 
 /**
- * @brief Get field fc_state from aviant_ats_status message
+ * @brief Get field fc_armed from aviant_ats_status message
  *
- * @return  fc_state, see uorb message
+ * @return  Is the flight controller armed?
  */
-static inline uint8_t mavlink_msg_aviant_ats_status_get_fc_state(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_aviant_ats_status_get_fc_armed(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint8_t(msg,  20);
+}
+
+/**
+ * @brief Get field fc_flight_termination from aviant_ats_status message
+ *
+ * @return  Is the flight controller in flight termination?
+ */
+static inline uint8_t mavlink_msg_aviant_ats_status_get_fc_flight_termination(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  21);
 }
 
 /**
@@ -388,7 +415,7 @@ static inline uint32_t mavlink_msg_aviant_ats_status_get_ats_status_flags(const 
  */
 static inline uint8_t mavlink_msg_aviant_ats_status_get_power_loss_trigger_enabled(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  21);
+    return _MAV_RETURN_uint8_t(msg,  22);
 }
 
 /**
@@ -398,7 +425,7 @@ static inline uint8_t mavlink_msg_aviant_ats_status_get_power_loss_trigger_enabl
  */
 static inline uint8_t mavlink_msg_aviant_ats_status_get_ats_enabled(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  22);
+    return _MAV_RETURN_uint8_t(msg,  23);
 }
 
 /**
@@ -445,7 +472,8 @@ static inline void mavlink_msg_aviant_ats_status_decode(const mavlink_message_t*
     aviant_ats_status->main_voltage1 = mavlink_msg_aviant_ats_status_get_main_voltage1(msg);
     aviant_ats_status->main_voltage2 = mavlink_msg_aviant_ats_status_get_main_voltage2(msg);
     aviant_ats_status->ups_voltage = mavlink_msg_aviant_ats_status_get_ups_voltage(msg);
-    aviant_ats_status->fc_state = mavlink_msg_aviant_ats_status_get_fc_state(msg);
+    aviant_ats_status->fc_armed = mavlink_msg_aviant_ats_status_get_fc_armed(msg);
+    aviant_ats_status->fc_flight_termination = mavlink_msg_aviant_ats_status_get_fc_flight_termination(msg);
     aviant_ats_status->power_loss_trigger_enabled = mavlink_msg_aviant_ats_status_get_power_loss_trigger_enabled(msg);
     aviant_ats_status->ats_enabled = mavlink_msg_aviant_ats_status_get_ats_enabled(msg);
 #else
