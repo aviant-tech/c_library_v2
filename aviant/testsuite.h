@@ -482,15 +482,14 @@ static void mavlink_test_aviant_detailed_fc_state(uint8_t system_id, uint8_t com
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_aviant_detailed_fc_state_t packet_in = {
-        93372036854775807ULL,963497880,41,108,175
+        93372036854775807ULL,963497880,41,108
     };
     mavlink_aviant_detailed_fc_state_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.time_unix_usec = packet_in.time_unix_usec;
         packet1.time_boot_ms = packet_in.time_boot_ms;
         packet1.armed = packet_in.armed;
-        packet1.vtol_state = packet_in.vtol_state;
-        packet1.system_status = packet_in.system_status;
+        packet1.flight_termination = packet_in.flight_termination;
         
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -505,12 +504,12 @@ static void mavlink_test_aviant_detailed_fc_state(uint8_t system_id, uint8_t com
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_detailed_fc_state_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.vtol_state , packet1.system_status );
+    mavlink_msg_aviant_detailed_fc_state_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.flight_termination );
     mavlink_msg_aviant_detailed_fc_state_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_detailed_fc_state_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.vtol_state , packet1.system_status );
+    mavlink_msg_aviant_detailed_fc_state_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.flight_termination );
     mavlink_msg_aviant_detailed_fc_state_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -523,7 +522,7 @@ static void mavlink_test_aviant_detailed_fc_state(uint8_t system_id, uint8_t com
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_detailed_fc_state_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.vtol_state , packet1.system_status );
+    mavlink_msg_aviant_detailed_fc_state_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.time_unix_usec , packet1.armed , packet1.flight_termination );
     mavlink_msg_aviant_detailed_fc_state_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -556,7 +555,7 @@ static void mavlink_test_aviant_ats_status(uint8_t system_id, uint8_t component_
         packet1.ups_voltage = packet_in.ups_voltage;
         packet1.fc_state = packet_in.fc_state;
         packet1.power_loss_trigger_enabled = packet_in.power_loss_trigger_enabled;
-        packet1.ats_active = packet_in.ats_active;
+        packet1.ats_enabled = packet_in.ats_enabled;
         
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -571,12 +570,12 @@ static void mavlink_test_aviant_ats_status(uint8_t system_id, uint8_t component_
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_ats_status_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_active , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
+    mavlink_msg_aviant_ats_status_pack(system_id, component_id, &msg , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_enabled , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
     mavlink_msg_aviant_ats_status_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_active , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
+    mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_enabled , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
     mavlink_msg_aviant_ats_status_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -589,7 +588,7 @@ static void mavlink_test_aviant_ats_status(uint8_t system_id, uint8_t component_
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_ats_status_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_active , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
+    mavlink_msg_aviant_ats_status_send(MAVLINK_COMM_1 , packet1.time_boot_ms , packet1.fc_state , packet1.ats_status_flags , packet1.power_loss_trigger_enabled , packet1.ats_enabled , packet1.main_voltage1 , packet1.main_voltage2 , packet1.ups_voltage );
     mavlink_msg_aviant_ats_status_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
