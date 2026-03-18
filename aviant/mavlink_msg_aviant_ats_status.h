@@ -12,7 +12,7 @@ typedef struct __mavlink_aviant_ats_status_t {
  float ups_voltage; /*< [V] UPS voltage measurement*/
  uint8_t fc_state; /*<  fc_state, see uorb message*/
  uint8_t power_loss_trigger_enabled; /*<  Power loss trigger enabled*/
- uint8_t ats_active; /*<  ATS active*/
+ uint8_t ats_enabled; /*<  ATS enabled*/
 } mavlink_aviant_ats_status_t;
 
 #define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN 23
@@ -20,8 +20,8 @@ typedef struct __mavlink_aviant_ats_status_t {
 #define MAVLINK_MSG_ID_59026_LEN 23
 #define MAVLINK_MSG_ID_59026_MIN_LEN 23
 
-#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 125
-#define MAVLINK_MSG_ID_59026_CRC 125
+#define MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC 119
+#define MAVLINK_MSG_ID_59026_CRC 119
 
 
 
@@ -34,7 +34,7 @@ typedef struct __mavlink_aviant_ats_status_t {
          { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
          { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
-         { "ats_active", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_active) }, \
+         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
          { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
          { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
          { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
@@ -48,7 +48,7 @@ typedef struct __mavlink_aviant_ats_status_t {
          { "fc_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_aviant_ats_status_t, fc_state) }, \
          { "ats_status_flags", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_aviant_ats_status_t, ats_status_flags) }, \
          { "power_loss_trigger_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_aviant_ats_status_t, power_loss_trigger_enabled) }, \
-         { "ats_active", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_active) }, \
+         { "ats_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_aviant_ats_status_t, ats_enabled) }, \
          { "main_voltage1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_aviant_ats_status_t, main_voltage1) }, \
          { "main_voltage2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_aviant_ats_status_t, main_voltage2) }, \
          { "ups_voltage", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_aviant_ats_status_t, ups_voltage) }, \
@@ -66,14 +66,14 @@ typedef struct __mavlink_aviant_ats_status_t {
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
- * @param ats_active  ATS active
+ * @param ats_enabled  ATS enabled
  * @param main_voltage1 [V] Main voltage measurement 1
  * @param main_voltage2 [V] Main voltage measurement 2
  * @param ups_voltage [V] UPS voltage measurement
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_active, float main_voltage1, float main_voltage2, float ups_voltage)
+                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -84,7 +84,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
     _mav_put_float(buf, 16, ups_voltage);
     _mav_put_uint8_t(buf, 20, fc_state);
     _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_active);
+    _mav_put_uint8_t(buf, 22, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -96,7 +96,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
     packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
-    packet.ats_active = ats_active;
+    packet.ats_enabled = ats_enabled;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #endif
@@ -116,14 +116,14 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack(uint8_t system_id, uin
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
- * @param ats_active  ATS active
+ * @param ats_enabled  ATS enabled
  * @param main_voltage1 [V] Main voltage measurement 1
  * @param main_voltage2 [V] Main voltage measurement 2
  * @param ups_voltage [V] UPS voltage measurement
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_active, float main_voltage1, float main_voltage2, float ups_voltage)
+                               uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -134,7 +134,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
     _mav_put_float(buf, 16, ups_voltage);
     _mav_put_uint8_t(buf, 20, fc_state);
     _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_active);
+    _mav_put_uint8_t(buf, 22, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -146,7 +146,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
     packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
-    packet.ats_active = ats_active;
+    packet.ats_enabled = ats_enabled;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #endif
@@ -169,7 +169,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
- * @param ats_active  ATS active
+ * @param ats_enabled  ATS enabled
  * @param main_voltage1 [V] Main voltage measurement 1
  * @param main_voltage2 [V] Main voltage measurement 2
  * @param ups_voltage [V] UPS voltage measurement
@@ -177,7 +177,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_status(uint8_t system_
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint8_t fc_state,uint32_t ats_status_flags,uint8_t power_loss_trigger_enabled,uint8_t ats_active,float main_voltage1,float main_voltage2,float ups_voltage)
+                                   uint32_t time_boot_ms,uint8_t fc_state,uint32_t ats_status_flags,uint8_t power_loss_trigger_enabled,uint8_t ats_enabled,float main_voltage1,float main_voltage2,float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -188,7 +188,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
     _mav_put_float(buf, 16, ups_voltage);
     _mav_put_uint8_t(buf, 20, fc_state);
     _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_active);
+    _mav_put_uint8_t(buf, 22, ats_enabled);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #else
@@ -200,7 +200,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
     packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
-    packet.ats_active = ats_active;
+    packet.ats_enabled = ats_enabled;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);
 #endif
@@ -219,7 +219,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_pack_chan(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_active, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack(system_id, component_id, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -233,7 +233,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode(uint8_t system_id, u
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_active, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack_chan(system_id, component_id, chan, msg, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -247,7 +247,7 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_chan(uint8_t system_
  */
 static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
-    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_active, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    return mavlink_msg_aviant_ats_status_pack_status(system_id, component_id, _status, msg,  aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 }
 
 /**
@@ -258,14 +258,14 @@ static inline uint16_t mavlink_msg_aviant_ats_status_encode_status(uint8_t syste
  * @param fc_state  fc_state, see uorb message
  * @param ats_status_flags  ATS Status flags
  * @param power_loss_trigger_enabled  Power loss trigger enabled
- * @param ats_active  ATS active
+ * @param ats_enabled  ATS enabled
  * @param main_voltage1 [V] Main voltage measurement 1
  * @param main_voltage2 [V] Main voltage measurement 2
  * @param ups_voltage [V] UPS voltage measurement
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_active, float main_voltage1, float main_voltage2, float ups_voltage)
+static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN];
@@ -276,7 +276,7 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
     _mav_put_float(buf, 16, ups_voltage);
     _mav_put_uint8_t(buf, 20, fc_state);
     _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_active);
+    _mav_put_uint8_t(buf, 22, ats_enabled);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
@@ -288,7 +288,7 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
     packet.ups_voltage = ups_voltage;
     packet.fc_state = fc_state;
     packet.power_loss_trigger_enabled = power_loss_trigger_enabled;
-    packet.ats_active = ats_active;
+    packet.ats_enabled = ats_enabled;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)&packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #endif
@@ -302,7 +302,7 @@ static inline void mavlink_msg_aviant_ats_status_send(mavlink_channel_t chan, ui
 static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t chan, const mavlink_aviant_ats_status_t* aviant_ats_status)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_active, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
+    mavlink_msg_aviant_ats_status_send(chan, aviant_ats_status->time_boot_ms, aviant_ats_status->fc_state, aviant_ats_status->ats_status_flags, aviant_ats_status->power_loss_trigger_enabled, aviant_ats_status->ats_enabled, aviant_ats_status->main_voltage1, aviant_ats_status->main_voltage2, aviant_ats_status->ups_voltage);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)aviant_ats_status, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #endif
@@ -316,7 +316,7 @@ static inline void mavlink_msg_aviant_ats_status_send_struct(mavlink_channel_t c
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_active, float main_voltage1, float main_voltage2, float ups_voltage)
+static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint8_t fc_state, uint32_t ats_status_flags, uint8_t power_loss_trigger_enabled, uint8_t ats_enabled, float main_voltage1, float main_voltage2, float ups_voltage)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -327,7 +327,7 @@ static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msg
     _mav_put_float(buf, 16, ups_voltage);
     _mav_put_uint8_t(buf, 20, fc_state);
     _mav_put_uint8_t(buf, 21, power_loss_trigger_enabled);
-    _mav_put_uint8_t(buf, 22, ats_active);
+    _mav_put_uint8_t(buf, 22, ats_enabled);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, buf, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #else
@@ -339,7 +339,7 @@ static inline void mavlink_msg_aviant_ats_status_send_buf(mavlink_message_t *msg
     packet->ups_voltage = ups_voltage;
     packet->fc_state = fc_state;
     packet->power_loss_trigger_enabled = power_loss_trigger_enabled;
-    packet->ats_active = ats_active;
+    packet->ats_enabled = ats_enabled;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_ATS_STATUS, (const char *)packet, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_MIN_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_CRC);
 #endif
@@ -392,11 +392,11 @@ static inline uint8_t mavlink_msg_aviant_ats_status_get_power_loss_trigger_enabl
 }
 
 /**
- * @brief Get field ats_active from aviant_ats_status message
+ * @brief Get field ats_enabled from aviant_ats_status message
  *
- * @return  ATS active
+ * @return  ATS enabled
  */
-static inline uint8_t mavlink_msg_aviant_ats_status_get_ats_active(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_aviant_ats_status_get_ats_enabled(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint8_t(msg,  22);
 }
@@ -447,7 +447,7 @@ static inline void mavlink_msg_aviant_ats_status_decode(const mavlink_message_t*
     aviant_ats_status->ups_voltage = mavlink_msg_aviant_ats_status_get_ups_voltage(msg);
     aviant_ats_status->fc_state = mavlink_msg_aviant_ats_status_get_fc_state(msg);
     aviant_ats_status->power_loss_trigger_enabled = mavlink_msg_aviant_ats_status_get_power_loss_trigger_enabled(msg);
-    aviant_ats_status->ats_active = mavlink_msg_aviant_ats_status_get_ats_active(msg);
+    aviant_ats_status->ats_enabled = mavlink_msg_aviant_ats_status_get_ats_enabled(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN? msg->len : MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN;
         memset(aviant_ats_status, 0, MAVLINK_MSG_ID_AVIANT_ATS_STATUS_LEN);

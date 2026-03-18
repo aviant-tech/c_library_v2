@@ -8,17 +8,16 @@ typedef struct __mavlink_aviant_detailed_fc_state_t {
  uint64_t time_unix_usec; /*< [us] Timestamp (UNIX epoch time).*/
  uint32_t time_boot_ms; /*< [ms] Timestamp (time since system boot).*/
  uint8_t armed; /*<  Is the aircraft armed?*/
- uint8_t vtol_state; /*<  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.*/
- uint8_t system_status; /*<  System status flag, equivalent to HEARTBEAT.system_status*/
+ uint8_t flight_termination; /*<  Is the aircraft in flight termination?*/
 } mavlink_aviant_detailed_fc_state_t;
 
-#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN 15
-#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN 15
-#define MAVLINK_MSG_ID_59025_LEN 15
-#define MAVLINK_MSG_ID_59025_MIN_LEN 15
+#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN 14
+#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN 14
+#define MAVLINK_MSG_ID_59025_LEN 14
+#define MAVLINK_MSG_ID_59025_MIN_LEN 14
 
-#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC 173
-#define MAVLINK_MSG_ID_59025_CRC 173
+#define MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC 199
+#define MAVLINK_MSG_ID_59025_CRC 199
 
 
 
@@ -26,23 +25,21 @@ typedef struct __mavlink_aviant_detailed_fc_state_t {
 #define MAVLINK_MESSAGE_INFO_AVIANT_DETAILED_FC_STATE { \
     59025, \
     "AVIANT_DETAILED_FC_STATE", \
-    5, \
+    4, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_aviant_detailed_fc_state_t, time_boot_ms) }, \
          { "time_unix_usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_aviant_detailed_fc_state_t, time_unix_usec) }, \
          { "armed", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_aviant_detailed_fc_state_t, armed) }, \
-         { "vtol_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_aviant_detailed_fc_state_t, vtol_state) }, \
-         { "system_status", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_aviant_detailed_fc_state_t, system_status) }, \
+         { "flight_termination", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_aviant_detailed_fc_state_t, flight_termination) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_AVIANT_DETAILED_FC_STATE { \
     "AVIANT_DETAILED_FC_STATE", \
-    5, \
+    4, \
     {  { "time_boot_ms", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_aviant_detailed_fc_state_t, time_boot_ms) }, \
          { "time_unix_usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_aviant_detailed_fc_state_t, time_unix_usec) }, \
          { "armed", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_aviant_detailed_fc_state_t, armed) }, \
-         { "vtol_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_aviant_detailed_fc_state_t, vtol_state) }, \
-         { "system_status", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_aviant_detailed_fc_state_t, system_status) }, \
+         { "flight_termination", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_aviant_detailed_fc_state_t, flight_termination) }, \
          } \
 }
 #endif
@@ -56,20 +53,18 @@ typedef struct __mavlink_aviant_detailed_fc_state_t {
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param time_unix_usec [us] Timestamp (UNIX epoch time).
  * @param armed  Is the aircraft armed?
- * @param vtol_state  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
- * @param system_status  System status flag, equivalent to HEARTBEAT.system_status
+ * @param flight_termination  Is the aircraft in flight termination?
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t vtol_state, uint8_t system_status)
+                               uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t flight_termination)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN];
     _mav_put_uint64_t(buf, 0, time_unix_usec);
     _mav_put_uint32_t(buf, 8, time_boot_ms);
     _mav_put_uint8_t(buf, 12, armed);
-    _mav_put_uint8_t(buf, 13, vtol_state);
-    _mav_put_uint8_t(buf, 14, system_status);
+    _mav_put_uint8_t(buf, 13, flight_termination);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #else
@@ -77,8 +72,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack(uint8_t system_
     packet.time_unix_usec = time_unix_usec;
     packet.time_boot_ms = time_boot_ms;
     packet.armed = armed;
-    packet.vtol_state = vtol_state;
-    packet.system_status = system_status;
+    packet.flight_termination = flight_termination;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #endif
@@ -97,20 +91,18 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack(uint8_t system_
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param time_unix_usec [us] Timestamp (UNIX epoch time).
  * @param armed  Is the aircraft armed?
- * @param vtol_state  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
- * @param system_status  System status flag, equivalent to HEARTBEAT.system_status
+ * @param flight_termination  Is the aircraft in flight termination?
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t vtol_state, uint8_t system_status)
+                               uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t flight_termination)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN];
     _mav_put_uint64_t(buf, 0, time_unix_usec);
     _mav_put_uint32_t(buf, 8, time_boot_ms);
     _mav_put_uint8_t(buf, 12, armed);
-    _mav_put_uint8_t(buf, 13, vtol_state);
-    _mav_put_uint8_t(buf, 14, system_status);
+    _mav_put_uint8_t(buf, 13, flight_termination);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #else
@@ -118,8 +110,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_status(uint8_t 
     packet.time_unix_usec = time_unix_usec;
     packet.time_boot_ms = time_boot_ms;
     packet.armed = armed;
-    packet.vtol_state = vtol_state;
-    packet.system_status = system_status;
+    packet.flight_termination = flight_termination;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #endif
@@ -141,21 +132,19 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_status(uint8_t 
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param time_unix_usec [us] Timestamp (UNIX epoch time).
  * @param armed  Is the aircraft armed?
- * @param vtol_state  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
- * @param system_status  System status flag, equivalent to HEARTBEAT.system_status
+ * @param flight_termination  Is the aircraft in flight termination?
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint32_t time_boot_ms,uint64_t time_unix_usec,uint8_t armed,uint8_t vtol_state,uint8_t system_status)
+                                   uint32_t time_boot_ms,uint64_t time_unix_usec,uint8_t armed,uint8_t flight_termination)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN];
     _mav_put_uint64_t(buf, 0, time_unix_usec);
     _mav_put_uint32_t(buf, 8, time_boot_ms);
     _mav_put_uint8_t(buf, 12, armed);
-    _mav_put_uint8_t(buf, 13, vtol_state);
-    _mav_put_uint8_t(buf, 14, system_status);
+    _mav_put_uint8_t(buf, 13, flight_termination);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #else
@@ -163,8 +152,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_chan(uint8_t sy
     packet.time_unix_usec = time_unix_usec;
     packet.time_boot_ms = time_boot_ms;
     packet.armed = armed;
-    packet.vtol_state = vtol_state;
-    packet.system_status = system_status;
+    packet.flight_termination = flight_termination;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
 #endif
@@ -183,7 +171,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_pack_chan(uint8_t sy
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_detailed_fc_state_t* aviant_detailed_fc_state)
 {
-    return mavlink_msg_aviant_detailed_fc_state_pack(system_id, component_id, msg, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->vtol_state, aviant_detailed_fc_state->system_status);
+    return mavlink_msg_aviant_detailed_fc_state_pack(system_id, component_id, msg, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->flight_termination);
 }
 
 /**
@@ -197,7 +185,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode(uint8_t syste
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_detailed_fc_state_t* aviant_detailed_fc_state)
 {
-    return mavlink_msg_aviant_detailed_fc_state_pack_chan(system_id, component_id, chan, msg, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->vtol_state, aviant_detailed_fc_state->system_status);
+    return mavlink_msg_aviant_detailed_fc_state_pack_chan(system_id, component_id, chan, msg, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->flight_termination);
 }
 
 /**
@@ -211,7 +199,7 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode_chan(uint8_t 
  */
 static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_detailed_fc_state_t* aviant_detailed_fc_state)
 {
-    return mavlink_msg_aviant_detailed_fc_state_pack_status(system_id, component_id, _status, msg,  aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->vtol_state, aviant_detailed_fc_state->system_status);
+    return mavlink_msg_aviant_detailed_fc_state_pack_status(system_id, component_id, _status, msg,  aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->flight_termination);
 }
 
 /**
@@ -221,20 +209,18 @@ static inline uint16_t mavlink_msg_aviant_detailed_fc_state_encode_status(uint8_
  * @param time_boot_ms [ms] Timestamp (time since system boot).
  * @param time_unix_usec [us] Timestamp (UNIX epoch time).
  * @param armed  Is the aircraft armed?
- * @param vtol_state  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
- * @param system_status  System status flag, equivalent to HEARTBEAT.system_status
+ * @param flight_termination  Is the aircraft in flight termination?
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_detailed_fc_state_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t vtol_state, uint8_t system_status)
+static inline void mavlink_msg_aviant_detailed_fc_state_send(mavlink_channel_t chan, uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t flight_termination)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN];
     _mav_put_uint64_t(buf, 0, time_unix_usec);
     _mav_put_uint32_t(buf, 8, time_boot_ms);
     _mav_put_uint8_t(buf, 12, armed);
-    _mav_put_uint8_t(buf, 13, vtol_state);
-    _mav_put_uint8_t(buf, 14, system_status);
+    _mav_put_uint8_t(buf, 13, flight_termination);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE, buf, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC);
 #else
@@ -242,8 +228,7 @@ static inline void mavlink_msg_aviant_detailed_fc_state_send(mavlink_channel_t c
     packet.time_unix_usec = time_unix_usec;
     packet.time_boot_ms = time_boot_ms;
     packet.armed = armed;
-    packet.vtol_state = vtol_state;
-    packet.system_status = system_status;
+    packet.flight_termination = flight_termination;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE, (const char *)&packet, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC);
 #endif
@@ -257,7 +242,7 @@ static inline void mavlink_msg_aviant_detailed_fc_state_send(mavlink_channel_t c
 static inline void mavlink_msg_aviant_detailed_fc_state_send_struct(mavlink_channel_t chan, const mavlink_aviant_detailed_fc_state_t* aviant_detailed_fc_state)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_detailed_fc_state_send(chan, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->vtol_state, aviant_detailed_fc_state->system_status);
+    mavlink_msg_aviant_detailed_fc_state_send(chan, aviant_detailed_fc_state->time_boot_ms, aviant_detailed_fc_state->time_unix_usec, aviant_detailed_fc_state->armed, aviant_detailed_fc_state->flight_termination);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE, (const char *)aviant_detailed_fc_state, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC);
 #endif
@@ -271,15 +256,14 @@ static inline void mavlink_msg_aviant_detailed_fc_state_send_struct(mavlink_chan
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_detailed_fc_state_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t vtol_state, uint8_t system_status)
+static inline void mavlink_msg_aviant_detailed_fc_state_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_ms, uint64_t time_unix_usec, uint8_t armed, uint8_t flight_termination)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint64_t(buf, 0, time_unix_usec);
     _mav_put_uint32_t(buf, 8, time_boot_ms);
     _mav_put_uint8_t(buf, 12, armed);
-    _mav_put_uint8_t(buf, 13, vtol_state);
-    _mav_put_uint8_t(buf, 14, system_status);
+    _mav_put_uint8_t(buf, 13, flight_termination);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE, buf, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC);
 #else
@@ -287,8 +271,7 @@ static inline void mavlink_msg_aviant_detailed_fc_state_send_buf(mavlink_message
     packet->time_unix_usec = time_unix_usec;
     packet->time_boot_ms = time_boot_ms;
     packet->armed = armed;
-    packet->vtol_state = vtol_state;
-    packet->system_status = system_status;
+    packet->flight_termination = flight_termination;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE, (const char *)packet, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_MIN_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_CRC);
 #endif
@@ -331,23 +314,13 @@ static inline uint8_t mavlink_msg_aviant_detailed_fc_state_get_armed(const mavli
 }
 
 /**
- * @brief Get field vtol_state from aviant_detailed_fc_state message
+ * @brief Get field flight_termination from aviant_detailed_fc_state message
  *
- * @return  The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
+ * @return  Is the aircraft in flight termination?
  */
-static inline uint8_t mavlink_msg_aviant_detailed_fc_state_get_vtol_state(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_aviant_detailed_fc_state_get_flight_termination(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint8_t(msg,  13);
-}
-
-/**
- * @brief Get field system_status from aviant_detailed_fc_state message
- *
- * @return  System status flag, equivalent to HEARTBEAT.system_status
- */
-static inline uint8_t mavlink_msg_aviant_detailed_fc_state_get_system_status(const mavlink_message_t* msg)
-{
-    return _MAV_RETURN_uint8_t(msg,  14);
 }
 
 /**
@@ -362,8 +335,7 @@ static inline void mavlink_msg_aviant_detailed_fc_state_decode(const mavlink_mes
     aviant_detailed_fc_state->time_unix_usec = mavlink_msg_aviant_detailed_fc_state_get_time_unix_usec(msg);
     aviant_detailed_fc_state->time_boot_ms = mavlink_msg_aviant_detailed_fc_state_get_time_boot_ms(msg);
     aviant_detailed_fc_state->armed = mavlink_msg_aviant_detailed_fc_state_get_armed(msg);
-    aviant_detailed_fc_state->vtol_state = mavlink_msg_aviant_detailed_fc_state_get_vtol_state(msg);
-    aviant_detailed_fc_state->system_status = mavlink_msg_aviant_detailed_fc_state_get_system_status(msg);
+    aviant_detailed_fc_state->flight_termination = mavlink_msg_aviant_detailed_fc_state_get_flight_termination(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN? msg->len : MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN;
         memset(aviant_detailed_fc_state, 0, MAVLINK_MSG_ID_AVIANT_DETAILED_FC_STATE_LEN);
