@@ -7,21 +7,23 @@
 typedef struct __mavlink_aviant_indicator_temp_logger_t {
  uint8_t pi_internal_state; /*<  Pi internal temperature status*/
  int8_t pi_internal; /*< [degC] Pi internal temperature*/
- uint8_t cube_ambient_state; /*<  Cube ambient temperature status*/
- int8_t cube_ambient; /*< [degC] Cube ambient temperature*/
+ uint8_t avionics_ambient_state; /*<  Avionics ambient temperature status*/
+ int8_t avionics_ambient; /*< [degC] Avionics ambient temperature*/
  uint8_t fuselage_ambient_state; /*<  Fuselage ambient temperature status*/
  int8_t fuselage_ambient; /*< [degC] Fuselage ambient temperature*/
  uint8_t outside_ambient_state; /*<  Outside ambient temperature status*/
  int8_t outside_ambient; /*< [degC] Outside ambient temperature*/
+ uint8_t modem_internal_state; /*<  Modem internal temperature status*/
+ int8_t modem_internal; /*< [degC] Modem internal temperature*/
 } mavlink_aviant_indicator_temp_logger_t;
 
-#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN 8
-#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN 8
-#define MAVLINK_MSG_ID_59005_LEN 8
-#define MAVLINK_MSG_ID_59005_MIN_LEN 8
+#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN 10
+#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN 10
+#define MAVLINK_MSG_ID_59005_LEN 10
+#define MAVLINK_MSG_ID_59005_MIN_LEN 10
 
-#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC 242
-#define MAVLINK_MSG_ID_59005_CRC 242
+#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC 6
+#define MAVLINK_MSG_ID_59005_CRC 6
 
 
 
@@ -29,29 +31,33 @@ typedef struct __mavlink_aviant_indicator_temp_logger_t {
 #define MAVLINK_MESSAGE_INFO_AVIANT_INDICATOR_TEMP_LOGGER { \
     59005, \
     "AVIANT_INDICATOR_TEMP_LOGGER", \
-    8, \
+    10, \
     {  { "pi_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_aviant_indicator_temp_logger_t, pi_internal_state) }, \
          { "pi_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 1, offsetof(mavlink_aviant_indicator_temp_logger_t, pi_internal) }, \
-         { "cube_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_logger_t, cube_ambient_state) }, \
-         { "cube_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_logger_t, cube_ambient) }, \
+         { "avionics_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_logger_t, avionics_ambient_state) }, \
+         { "avionics_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_logger_t, avionics_ambient) }, \
          { "fuselage_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_logger_t, fuselage_ambient_state) }, \
          { "fuselage_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_logger_t, fuselage_ambient) }, \
          { "outside_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_aviant_indicator_temp_logger_t, outside_ambient_state) }, \
          { "outside_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 7, offsetof(mavlink_aviant_indicator_temp_logger_t, outside_ambient) }, \
+         { "modem_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_aviant_indicator_temp_logger_t, modem_internal_state) }, \
+         { "modem_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 9, offsetof(mavlink_aviant_indicator_temp_logger_t, modem_internal) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_AVIANT_INDICATOR_TEMP_LOGGER { \
     "AVIANT_INDICATOR_TEMP_LOGGER", \
-    8, \
+    10, \
     {  { "pi_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_aviant_indicator_temp_logger_t, pi_internal_state) }, \
          { "pi_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 1, offsetof(mavlink_aviant_indicator_temp_logger_t, pi_internal) }, \
-         { "cube_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_logger_t, cube_ambient_state) }, \
-         { "cube_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_logger_t, cube_ambient) }, \
+         { "avionics_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_logger_t, avionics_ambient_state) }, \
+         { "avionics_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_logger_t, avionics_ambient) }, \
          { "fuselage_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_logger_t, fuselage_ambient_state) }, \
          { "fuselage_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_logger_t, fuselage_ambient) }, \
          { "outside_ambient_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_aviant_indicator_temp_logger_t, outside_ambient_state) }, \
          { "outside_ambient", NULL, MAVLINK_TYPE_INT8_T, 0, 7, offsetof(mavlink_aviant_indicator_temp_logger_t, outside_ambient) }, \
+         { "modem_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_aviant_indicator_temp_logger_t, modem_internal_state) }, \
+         { "modem_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 9, offsetof(mavlink_aviant_indicator_temp_logger_t, modem_internal) }, \
          } \
 }
 #endif
@@ -64,39 +70,45 @@ typedef struct __mavlink_aviant_indicator_temp_logger_t {
  *
  * @param pi_internal_state  Pi internal temperature status
  * @param pi_internal [degC] Pi internal temperature
- * @param cube_ambient_state  Cube ambient temperature status
- * @param cube_ambient [degC] Cube ambient temperature
+ * @param avionics_ambient_state  Avionics ambient temperature status
+ * @param avionics_ambient [degC] Avionics ambient temperature
  * @param fuselage_ambient_state  Fuselage ambient temperature status
  * @param fuselage_ambient [degC] Fuselage ambient temperature
  * @param outside_ambient_state  Outside ambient temperature status
  * @param outside_ambient [degC] Outside ambient temperature
+ * @param modem_internal_state  Modem internal temperature status
+ * @param modem_internal [degC] Modem internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t pi_internal_state, int8_t pi_internal, uint8_t cube_ambient_state, int8_t cube_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient)
+                               uint8_t pi_internal_state, int8_t pi_internal, uint8_t avionics_ambient_state, int8_t avionics_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient, uint8_t modem_internal_state, int8_t modem_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN];
     _mav_put_uint8_t(buf, 0, pi_internal_state);
     _mav_put_int8_t(buf, 1, pi_internal);
-    _mav_put_uint8_t(buf, 2, cube_ambient_state);
-    _mav_put_int8_t(buf, 3, cube_ambient);
+    _mav_put_uint8_t(buf, 2, avionics_ambient_state);
+    _mav_put_int8_t(buf, 3, avionics_ambient);
     _mav_put_uint8_t(buf, 4, fuselage_ambient_state);
     _mav_put_int8_t(buf, 5, fuselage_ambient);
     _mav_put_uint8_t(buf, 6, outside_ambient_state);
     _mav_put_int8_t(buf, 7, outside_ambient);
+    _mav_put_uint8_t(buf, 8, modem_internal_state);
+    _mav_put_int8_t(buf, 9, modem_internal);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #else
     mavlink_aviant_indicator_temp_logger_t packet;
     packet.pi_internal_state = pi_internal_state;
     packet.pi_internal = pi_internal;
-    packet.cube_ambient_state = cube_ambient_state;
-    packet.cube_ambient = cube_ambient;
+    packet.avionics_ambient_state = avionics_ambient_state;
+    packet.avionics_ambient = avionics_ambient;
     packet.fuselage_ambient_state = fuselage_ambient_state;
     packet.fuselage_ambient = fuselage_ambient;
     packet.outside_ambient_state = outside_ambient_state;
     packet.outside_ambient = outside_ambient;
+    packet.modem_internal_state = modem_internal_state;
+    packet.modem_internal = modem_internal;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #endif
@@ -114,39 +126,45 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack(uint8_t sys
  *
  * @param pi_internal_state  Pi internal temperature status
  * @param pi_internal [degC] Pi internal temperature
- * @param cube_ambient_state  Cube ambient temperature status
- * @param cube_ambient [degC] Cube ambient temperature
+ * @param avionics_ambient_state  Avionics ambient temperature status
+ * @param avionics_ambient [degC] Avionics ambient temperature
  * @param fuselage_ambient_state  Fuselage ambient temperature status
  * @param fuselage_ambient [degC] Fuselage ambient temperature
  * @param outside_ambient_state  Outside ambient temperature status
  * @param outside_ambient [degC] Outside ambient temperature
+ * @param modem_internal_state  Modem internal temperature status
+ * @param modem_internal [degC] Modem internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint8_t pi_internal_state, int8_t pi_internal, uint8_t cube_ambient_state, int8_t cube_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient)
+                               uint8_t pi_internal_state, int8_t pi_internal, uint8_t avionics_ambient_state, int8_t avionics_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient, uint8_t modem_internal_state, int8_t modem_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN];
     _mav_put_uint8_t(buf, 0, pi_internal_state);
     _mav_put_int8_t(buf, 1, pi_internal);
-    _mav_put_uint8_t(buf, 2, cube_ambient_state);
-    _mav_put_int8_t(buf, 3, cube_ambient);
+    _mav_put_uint8_t(buf, 2, avionics_ambient_state);
+    _mav_put_int8_t(buf, 3, avionics_ambient);
     _mav_put_uint8_t(buf, 4, fuselage_ambient_state);
     _mav_put_int8_t(buf, 5, fuselage_ambient);
     _mav_put_uint8_t(buf, 6, outside_ambient_state);
     _mav_put_int8_t(buf, 7, outside_ambient);
+    _mav_put_uint8_t(buf, 8, modem_internal_state);
+    _mav_put_int8_t(buf, 9, modem_internal);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #else
     mavlink_aviant_indicator_temp_logger_t packet;
     packet.pi_internal_state = pi_internal_state;
     packet.pi_internal = pi_internal;
-    packet.cube_ambient_state = cube_ambient_state;
-    packet.cube_ambient = cube_ambient;
+    packet.avionics_ambient_state = avionics_ambient_state;
+    packet.avionics_ambient = avionics_ambient;
     packet.fuselage_ambient_state = fuselage_ambient_state;
     packet.fuselage_ambient = fuselage_ambient;
     packet.outside_ambient_state = outside_ambient_state;
     packet.outside_ambient = outside_ambient;
+    packet.modem_internal_state = modem_internal_state;
+    packet.modem_internal = modem_internal;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #endif
@@ -167,40 +185,46 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack_status(uint
  * @param msg The MAVLink message to compress the data into
  * @param pi_internal_state  Pi internal temperature status
  * @param pi_internal [degC] Pi internal temperature
- * @param cube_ambient_state  Cube ambient temperature status
- * @param cube_ambient [degC] Cube ambient temperature
+ * @param avionics_ambient_state  Avionics ambient temperature status
+ * @param avionics_ambient [degC] Avionics ambient temperature
  * @param fuselage_ambient_state  Fuselage ambient temperature status
  * @param fuselage_ambient [degC] Fuselage ambient temperature
  * @param outside_ambient_state  Outside ambient temperature status
  * @param outside_ambient [degC] Outside ambient temperature
+ * @param modem_internal_state  Modem internal temperature status
+ * @param modem_internal [degC] Modem internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t pi_internal_state,int8_t pi_internal,uint8_t cube_ambient_state,int8_t cube_ambient,uint8_t fuselage_ambient_state,int8_t fuselage_ambient,uint8_t outside_ambient_state,int8_t outside_ambient)
+                                   uint8_t pi_internal_state,int8_t pi_internal,uint8_t avionics_ambient_state,int8_t avionics_ambient,uint8_t fuselage_ambient_state,int8_t fuselage_ambient,uint8_t outside_ambient_state,int8_t outside_ambient,uint8_t modem_internal_state,int8_t modem_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN];
     _mav_put_uint8_t(buf, 0, pi_internal_state);
     _mav_put_int8_t(buf, 1, pi_internal);
-    _mav_put_uint8_t(buf, 2, cube_ambient_state);
-    _mav_put_int8_t(buf, 3, cube_ambient);
+    _mav_put_uint8_t(buf, 2, avionics_ambient_state);
+    _mav_put_int8_t(buf, 3, avionics_ambient);
     _mav_put_uint8_t(buf, 4, fuselage_ambient_state);
     _mav_put_int8_t(buf, 5, fuselage_ambient);
     _mav_put_uint8_t(buf, 6, outside_ambient_state);
     _mav_put_int8_t(buf, 7, outside_ambient);
+    _mav_put_uint8_t(buf, 8, modem_internal_state);
+    _mav_put_int8_t(buf, 9, modem_internal);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #else
     mavlink_aviant_indicator_temp_logger_t packet;
     packet.pi_internal_state = pi_internal_state;
     packet.pi_internal = pi_internal;
-    packet.cube_ambient_state = cube_ambient_state;
-    packet.cube_ambient = cube_ambient;
+    packet.avionics_ambient_state = avionics_ambient_state;
+    packet.avionics_ambient = avionics_ambient;
     packet.fuselage_ambient_state = fuselage_ambient_state;
     packet.fuselage_ambient = fuselage_ambient;
     packet.outside_ambient_state = outside_ambient_state;
     packet.outside_ambient = outside_ambient;
+    packet.modem_internal_state = modem_internal_state;
+    packet.modem_internal = modem_internal;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
 #endif
@@ -219,7 +243,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_pack_chan(uint8_
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_logger_t* aviant_indicator_temp_logger)
 {
-    return mavlink_msg_aviant_indicator_temp_logger_pack(system_id, component_id, msg, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->cube_ambient_state, aviant_indicator_temp_logger->cube_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient);
+    return mavlink_msg_aviant_indicator_temp_logger_pack(system_id, component_id, msg, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->avionics_ambient_state, aviant_indicator_temp_logger->avionics_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient, aviant_indicator_temp_logger->modem_internal_state, aviant_indicator_temp_logger->modem_internal);
 }
 
 /**
@@ -233,7 +257,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode(uint8_t s
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_logger_t* aviant_indicator_temp_logger)
 {
-    return mavlink_msg_aviant_indicator_temp_logger_pack_chan(system_id, component_id, chan, msg, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->cube_ambient_state, aviant_indicator_temp_logger->cube_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient);
+    return mavlink_msg_aviant_indicator_temp_logger_pack_chan(system_id, component_id, chan, msg, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->avionics_ambient_state, aviant_indicator_temp_logger->avionics_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient, aviant_indicator_temp_logger->modem_internal_state, aviant_indicator_temp_logger->modem_internal);
 }
 
 /**
@@ -247,7 +271,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode_chan(uint
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_logger_t* aviant_indicator_temp_logger)
 {
-    return mavlink_msg_aviant_indicator_temp_logger_pack_status(system_id, component_id, _status, msg,  aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->cube_ambient_state, aviant_indicator_temp_logger->cube_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient);
+    return mavlink_msg_aviant_indicator_temp_logger_pack_status(system_id, component_id, _status, msg,  aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->avionics_ambient_state, aviant_indicator_temp_logger->avionics_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient, aviant_indicator_temp_logger->modem_internal_state, aviant_indicator_temp_logger->modem_internal);
 }
 
 /**
@@ -256,39 +280,45 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_logger_encode_status(ui
  *
  * @param pi_internal_state  Pi internal temperature status
  * @param pi_internal [degC] Pi internal temperature
- * @param cube_ambient_state  Cube ambient temperature status
- * @param cube_ambient [degC] Cube ambient temperature
+ * @param avionics_ambient_state  Avionics ambient temperature status
+ * @param avionics_ambient [degC] Avionics ambient temperature
  * @param fuselage_ambient_state  Fuselage ambient temperature status
  * @param fuselage_ambient [degC] Fuselage ambient temperature
  * @param outside_ambient_state  Outside ambient temperature status
  * @param outside_ambient [degC] Outside ambient temperature
+ * @param modem_internal_state  Modem internal temperature status
+ * @param modem_internal [degC] Modem internal temperature
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_indicator_temp_logger_send(mavlink_channel_t chan, uint8_t pi_internal_state, int8_t pi_internal, uint8_t cube_ambient_state, int8_t cube_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient)
+static inline void mavlink_msg_aviant_indicator_temp_logger_send(mavlink_channel_t chan, uint8_t pi_internal_state, int8_t pi_internal, uint8_t avionics_ambient_state, int8_t avionics_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient, uint8_t modem_internal_state, int8_t modem_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN];
     _mav_put_uint8_t(buf, 0, pi_internal_state);
     _mav_put_int8_t(buf, 1, pi_internal);
-    _mav_put_uint8_t(buf, 2, cube_ambient_state);
-    _mav_put_int8_t(buf, 3, cube_ambient);
+    _mav_put_uint8_t(buf, 2, avionics_ambient_state);
+    _mav_put_int8_t(buf, 3, avionics_ambient);
     _mav_put_uint8_t(buf, 4, fuselage_ambient_state);
     _mav_put_int8_t(buf, 5, fuselage_ambient);
     _mav_put_uint8_t(buf, 6, outside_ambient_state);
     _mav_put_int8_t(buf, 7, outside_ambient);
+    _mav_put_uint8_t(buf, 8, modem_internal_state);
+    _mav_put_int8_t(buf, 9, modem_internal);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER, buf, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC);
 #else
     mavlink_aviant_indicator_temp_logger_t packet;
     packet.pi_internal_state = pi_internal_state;
     packet.pi_internal = pi_internal;
-    packet.cube_ambient_state = cube_ambient_state;
-    packet.cube_ambient = cube_ambient;
+    packet.avionics_ambient_state = avionics_ambient_state;
+    packet.avionics_ambient = avionics_ambient;
     packet.fuselage_ambient_state = fuselage_ambient_state;
     packet.fuselage_ambient = fuselage_ambient;
     packet.outside_ambient_state = outside_ambient_state;
     packet.outside_ambient = outside_ambient;
+    packet.modem_internal_state = modem_internal_state;
+    packet.modem_internal = modem_internal;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER, (const char *)&packet, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC);
 #endif
@@ -302,7 +332,7 @@ static inline void mavlink_msg_aviant_indicator_temp_logger_send(mavlink_channel
 static inline void mavlink_msg_aviant_indicator_temp_logger_send_struct(mavlink_channel_t chan, const mavlink_aviant_indicator_temp_logger_t* aviant_indicator_temp_logger)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_indicator_temp_logger_send(chan, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->cube_ambient_state, aviant_indicator_temp_logger->cube_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient);
+    mavlink_msg_aviant_indicator_temp_logger_send(chan, aviant_indicator_temp_logger->pi_internal_state, aviant_indicator_temp_logger->pi_internal, aviant_indicator_temp_logger->avionics_ambient_state, aviant_indicator_temp_logger->avionics_ambient, aviant_indicator_temp_logger->fuselage_ambient_state, aviant_indicator_temp_logger->fuselage_ambient, aviant_indicator_temp_logger->outside_ambient_state, aviant_indicator_temp_logger->outside_ambient, aviant_indicator_temp_logger->modem_internal_state, aviant_indicator_temp_logger->modem_internal);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER, (const char *)aviant_indicator_temp_logger, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC);
 #endif
@@ -316,30 +346,34 @@ static inline void mavlink_msg_aviant_indicator_temp_logger_send_struct(mavlink_
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_indicator_temp_logger_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t pi_internal_state, int8_t pi_internal, uint8_t cube_ambient_state, int8_t cube_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient)
+static inline void mavlink_msg_aviant_indicator_temp_logger_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t pi_internal_state, int8_t pi_internal, uint8_t avionics_ambient_state, int8_t avionics_ambient, uint8_t fuselage_ambient_state, int8_t fuselage_ambient, uint8_t outside_ambient_state, int8_t outside_ambient, uint8_t modem_internal_state, int8_t modem_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint8_t(buf, 0, pi_internal_state);
     _mav_put_int8_t(buf, 1, pi_internal);
-    _mav_put_uint8_t(buf, 2, cube_ambient_state);
-    _mav_put_int8_t(buf, 3, cube_ambient);
+    _mav_put_uint8_t(buf, 2, avionics_ambient_state);
+    _mav_put_int8_t(buf, 3, avionics_ambient);
     _mav_put_uint8_t(buf, 4, fuselage_ambient_state);
     _mav_put_int8_t(buf, 5, fuselage_ambient);
     _mav_put_uint8_t(buf, 6, outside_ambient_state);
     _mav_put_int8_t(buf, 7, outside_ambient);
+    _mav_put_uint8_t(buf, 8, modem_internal_state);
+    _mav_put_int8_t(buf, 9, modem_internal);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER, buf, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC);
 #else
     mavlink_aviant_indicator_temp_logger_t *packet = (mavlink_aviant_indicator_temp_logger_t *)msgbuf;
     packet->pi_internal_state = pi_internal_state;
     packet->pi_internal = pi_internal;
-    packet->cube_ambient_state = cube_ambient_state;
-    packet->cube_ambient = cube_ambient;
+    packet->avionics_ambient_state = avionics_ambient_state;
+    packet->avionics_ambient = avionics_ambient;
     packet->fuselage_ambient_state = fuselage_ambient_state;
     packet->fuselage_ambient = fuselage_ambient;
     packet->outside_ambient_state = outside_ambient_state;
     packet->outside_ambient = outside_ambient;
+    packet->modem_internal_state = modem_internal_state;
+    packet->modem_internal = modem_internal;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER, (const char *)packet, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_CRC);
 #endif
@@ -372,21 +406,21 @@ static inline int8_t mavlink_msg_aviant_indicator_temp_logger_get_pi_internal(co
 }
 
 /**
- * @brief Get field cube_ambient_state from aviant_indicator_temp_logger message
+ * @brief Get field avionics_ambient_state from aviant_indicator_temp_logger message
  *
- * @return  Cube ambient temperature status
+ * @return  Avionics ambient temperature status
  */
-static inline uint8_t mavlink_msg_aviant_indicator_temp_logger_get_cube_ambient_state(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_aviant_indicator_temp_logger_get_avionics_ambient_state(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint8_t(msg,  2);
 }
 
 /**
- * @brief Get field cube_ambient from aviant_indicator_temp_logger message
+ * @brief Get field avionics_ambient from aviant_indicator_temp_logger message
  *
- * @return [degC] Cube ambient temperature
+ * @return [degC] Avionics ambient temperature
  */
-static inline int8_t mavlink_msg_aviant_indicator_temp_logger_get_cube_ambient(const mavlink_message_t* msg)
+static inline int8_t mavlink_msg_aviant_indicator_temp_logger_get_avionics_ambient(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_int8_t(msg,  3);
 }
@@ -432,6 +466,26 @@ static inline int8_t mavlink_msg_aviant_indicator_temp_logger_get_outside_ambien
 }
 
 /**
+ * @brief Get field modem_internal_state from aviant_indicator_temp_logger message
+ *
+ * @return  Modem internal temperature status
+ */
+static inline uint8_t mavlink_msg_aviant_indicator_temp_logger_get_modem_internal_state(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  8);
+}
+
+/**
+ * @brief Get field modem_internal from aviant_indicator_temp_logger message
+ *
+ * @return [degC] Modem internal temperature
+ */
+static inline int8_t mavlink_msg_aviant_indicator_temp_logger_get_modem_internal(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_int8_t(msg,  9);
+}
+
+/**
  * @brief Decode a aviant_indicator_temp_logger message into a struct
  *
  * @param msg The message to decode
@@ -442,12 +496,14 @@ static inline void mavlink_msg_aviant_indicator_temp_logger_decode(const mavlink
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     aviant_indicator_temp_logger->pi_internal_state = mavlink_msg_aviant_indicator_temp_logger_get_pi_internal_state(msg);
     aviant_indicator_temp_logger->pi_internal = mavlink_msg_aviant_indicator_temp_logger_get_pi_internal(msg);
-    aviant_indicator_temp_logger->cube_ambient_state = mavlink_msg_aviant_indicator_temp_logger_get_cube_ambient_state(msg);
-    aviant_indicator_temp_logger->cube_ambient = mavlink_msg_aviant_indicator_temp_logger_get_cube_ambient(msg);
+    aviant_indicator_temp_logger->avionics_ambient_state = mavlink_msg_aviant_indicator_temp_logger_get_avionics_ambient_state(msg);
+    aviant_indicator_temp_logger->avionics_ambient = mavlink_msg_aviant_indicator_temp_logger_get_avionics_ambient(msg);
     aviant_indicator_temp_logger->fuselage_ambient_state = mavlink_msg_aviant_indicator_temp_logger_get_fuselage_ambient_state(msg);
     aviant_indicator_temp_logger->fuselage_ambient = mavlink_msg_aviant_indicator_temp_logger_get_fuselage_ambient(msg);
     aviant_indicator_temp_logger->outside_ambient_state = mavlink_msg_aviant_indicator_temp_logger_get_outside_ambient_state(msg);
     aviant_indicator_temp_logger->outside_ambient = mavlink_msg_aviant_indicator_temp_logger_get_outside_ambient(msg);
+    aviant_indicator_temp_logger->modem_internal_state = mavlink_msg_aviant_indicator_temp_logger_get_modem_internal_state(msg);
+    aviant_indicator_temp_logger->modem_internal = mavlink_msg_aviant_indicator_temp_logger_get_modem_internal(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN? msg->len : MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN;
         memset(aviant_indicator_temp_logger, 0, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_LOGGER_LEN);
