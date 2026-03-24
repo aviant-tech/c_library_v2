@@ -350,18 +350,20 @@ static void mavlink_test_aviant_indicator_temp_logger(uint8_t system_id, uint8_t
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_aviant_indicator_temp_logger_t packet_in = {
-        5,72,139,206,17,84,151,218
+        5,72,139,206,17,84,151,218,29,96
     };
     mavlink_aviant_indicator_temp_logger_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.pi_internal_state = packet_in.pi_internal_state;
         packet1.pi_internal = packet_in.pi_internal;
-        packet1.cube_ambient_state = packet_in.cube_ambient_state;
-        packet1.cube_ambient = packet_in.cube_ambient;
+        packet1.avionics_ambient_state = packet_in.avionics_ambient_state;
+        packet1.avionics_ambient = packet_in.avionics_ambient;
         packet1.fuselage_ambient_state = packet_in.fuselage_ambient_state;
         packet1.fuselage_ambient = packet_in.fuselage_ambient;
         packet1.outside_ambient_state = packet_in.outside_ambient_state;
         packet1.outside_ambient = packet_in.outside_ambient;
+        packet1.modem_internal_state = packet_in.modem_internal_state;
+        packet1.modem_internal = packet_in.modem_internal;
         
         
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -376,12 +378,12 @@ static void mavlink_test_aviant_indicator_temp_logger(uint8_t system_id, uint8_t
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_logger_pack(system_id, component_id, &msg , packet1.pi_internal_state , packet1.pi_internal , packet1.cube_ambient_state , packet1.cube_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient );
+    mavlink_msg_aviant_indicator_temp_logger_pack(system_id, component_id, &msg , packet1.pi_internal_state , packet1.pi_internal , packet1.avionics_ambient_state , packet1.avionics_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient , packet1.modem_internal_state , packet1.modem_internal );
     mavlink_msg_aviant_indicator_temp_logger_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_logger_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pi_internal_state , packet1.pi_internal , packet1.cube_ambient_state , packet1.cube_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient );
+    mavlink_msg_aviant_indicator_temp_logger_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pi_internal_state , packet1.pi_internal , packet1.avionics_ambient_state , packet1.avionics_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient , packet1.modem_internal_state , packet1.modem_internal );
     mavlink_msg_aviant_indicator_temp_logger_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -394,7 +396,7 @@ static void mavlink_test_aviant_indicator_temp_logger(uint8_t system_id, uint8_t
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_logger_send(MAVLINK_COMM_1 , packet1.pi_internal_state , packet1.pi_internal , packet1.cube_ambient_state , packet1.cube_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient );
+    mavlink_msg_aviant_indicator_temp_logger_send(MAVLINK_COMM_1 , packet1.pi_internal_state , packet1.pi_internal , packet1.avionics_ambient_state , packet1.avionics_ambient , packet1.fuselage_ambient_state , packet1.fuselage_ambient , packet1.outside_ambient_state , packet1.outside_ambient , packet1.modem_internal_state , packet1.modem_internal );
     mavlink_msg_aviant_indicator_temp_logger_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -424,8 +426,8 @@ static void mavlink_test_aviant_indicator_temp_fc(uint8_t system_id, uint8_t com
         packet1.battery_internal = packet_in.battery_internal;
         packet1.airspeed_internal_state = packet_in.airspeed_internal_state;
         packet1.airspeed_internal = packet_in.airspeed_internal;
-        packet1.accel_internal_state = packet_in.accel_internal_state;
-        packet1.accel_internal = packet_in.accel_internal;
+        packet1.imu_internal_state = packet_in.imu_internal_state;
+        packet1.imu_internal = packet_in.imu_internal;
         packet1.baro_internal_state = packet_in.baro_internal_state;
         packet1.baro_internal = packet_in.baro_internal;
         
@@ -442,12 +444,12 @@ static void mavlink_test_aviant_indicator_temp_fc(uint8_t system_id, uint8_t com
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_fc_pack(system_id, component_id, &msg , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.accel_internal_state , packet1.accel_internal , packet1.baro_internal_state , packet1.baro_internal );
+    mavlink_msg_aviant_indicator_temp_fc_pack(system_id, component_id, &msg , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.imu_internal_state , packet1.imu_internal , packet1.baro_internal_state , packet1.baro_internal );
     mavlink_msg_aviant_indicator_temp_fc_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_fc_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.accel_internal_state , packet1.accel_internal , packet1.baro_internal_state , packet1.baro_internal );
+    mavlink_msg_aviant_indicator_temp_fc_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.imu_internal_state , packet1.imu_internal , packet1.baro_internal_state , packet1.baro_internal );
     mavlink_msg_aviant_indicator_temp_fc_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -460,7 +462,7 @@ static void mavlink_test_aviant_indicator_temp_fc(uint8_t system_id, uint8_t com
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_aviant_indicator_temp_fc_send(MAVLINK_COMM_1 , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.accel_internal_state , packet1.accel_internal , packet1.baro_internal_state , packet1.baro_internal );
+    mavlink_msg_aviant_indicator_temp_fc_send(MAVLINK_COMM_1 , packet1.battery_internal_state , packet1.battery_internal , packet1.airspeed_internal_state , packet1.airspeed_internal , packet1.imu_internal_state , packet1.imu_internal , packet1.baro_internal_state , packet1.baro_internal );
     mavlink_msg_aviant_indicator_temp_fc_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 

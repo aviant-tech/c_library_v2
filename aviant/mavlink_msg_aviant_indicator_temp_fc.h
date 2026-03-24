@@ -9,8 +9,8 @@ typedef struct __mavlink_aviant_indicator_temp_fc_t {
  int8_t battery_internal; /*< [degC] Battery internal temperature*/
  uint8_t airspeed_internal_state; /*<  Airspeed sensor internal temperature status*/
  int8_t airspeed_internal; /*< [degC] Airspeed sensor internal temperature*/
- uint8_t accel_internal_state; /*<  Accelerometer internal temperature status*/
- int8_t accel_internal; /*< [degC] Accelerometer internal temperature*/
+ uint8_t imu_internal_state; /*<  IMU internal temperature status*/
+ int8_t imu_internal; /*< [degC] IMU internal temperature*/
  uint8_t baro_internal_state; /*<  Barometer internal temperature status*/
  int8_t baro_internal; /*< [degC] Barometer internal temperature*/
 } mavlink_aviant_indicator_temp_fc_t;
@@ -20,8 +20,8 @@ typedef struct __mavlink_aviant_indicator_temp_fc_t {
 #define MAVLINK_MSG_ID_59006_LEN 8
 #define MAVLINK_MSG_ID_59006_MIN_LEN 8
 
-#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_CRC 244
-#define MAVLINK_MSG_ID_59006_CRC 244
+#define MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_CRC 223
+#define MAVLINK_MSG_ID_59006_CRC 223
 
 
 
@@ -34,8 +34,8 @@ typedef struct __mavlink_aviant_indicator_temp_fc_t {
          { "battery_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 1, offsetof(mavlink_aviant_indicator_temp_fc_t, battery_internal) }, \
          { "airspeed_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_fc_t, airspeed_internal_state) }, \
          { "airspeed_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_fc_t, airspeed_internal) }, \
-         { "accel_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_fc_t, accel_internal_state) }, \
-         { "accel_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_fc_t, accel_internal) }, \
+         { "imu_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_fc_t, imu_internal_state) }, \
+         { "imu_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_fc_t, imu_internal) }, \
          { "baro_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_aviant_indicator_temp_fc_t, baro_internal_state) }, \
          { "baro_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 7, offsetof(mavlink_aviant_indicator_temp_fc_t, baro_internal) }, \
          } \
@@ -48,8 +48,8 @@ typedef struct __mavlink_aviant_indicator_temp_fc_t {
          { "battery_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 1, offsetof(mavlink_aviant_indicator_temp_fc_t, battery_internal) }, \
          { "airspeed_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_aviant_indicator_temp_fc_t, airspeed_internal_state) }, \
          { "airspeed_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_aviant_indicator_temp_fc_t, airspeed_internal) }, \
-         { "accel_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_fc_t, accel_internal_state) }, \
-         { "accel_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_fc_t, accel_internal) }, \
+         { "imu_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_aviant_indicator_temp_fc_t, imu_internal_state) }, \
+         { "imu_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 5, offsetof(mavlink_aviant_indicator_temp_fc_t, imu_internal) }, \
          { "baro_internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_aviant_indicator_temp_fc_t, baro_internal_state) }, \
          { "baro_internal", NULL, MAVLINK_TYPE_INT8_T, 0, 7, offsetof(mavlink_aviant_indicator_temp_fc_t, baro_internal) }, \
          } \
@@ -66,14 +66,14 @@ typedef struct __mavlink_aviant_indicator_temp_fc_t {
  * @param battery_internal [degC] Battery internal temperature
  * @param airspeed_internal_state  Airspeed sensor internal temperature status
  * @param airspeed_internal [degC] Airspeed sensor internal temperature
- * @param accel_internal_state  Accelerometer internal temperature status
- * @param accel_internal [degC] Accelerometer internal temperature
+ * @param imu_internal_state  IMU internal temperature status
+ * @param imu_internal [degC] IMU internal temperature
  * @param baro_internal_state  Barometer internal temperature status
  * @param baro_internal [degC] Barometer internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t accel_internal_state, int8_t accel_internal, uint8_t baro_internal_state, int8_t baro_internal)
+                               uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t imu_internal_state, int8_t imu_internal, uint8_t baro_internal_state, int8_t baro_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_LEN];
@@ -81,8 +81,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack(uint8_t system_
     _mav_put_int8_t(buf, 1, battery_internal);
     _mav_put_uint8_t(buf, 2, airspeed_internal_state);
     _mav_put_int8_t(buf, 3, airspeed_internal);
-    _mav_put_uint8_t(buf, 4, accel_internal_state);
-    _mav_put_int8_t(buf, 5, accel_internal);
+    _mav_put_uint8_t(buf, 4, imu_internal_state);
+    _mav_put_int8_t(buf, 5, imu_internal);
     _mav_put_uint8_t(buf, 6, baro_internal_state);
     _mav_put_int8_t(buf, 7, baro_internal);
 
@@ -93,8 +93,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack(uint8_t system_
     packet.battery_internal = battery_internal;
     packet.airspeed_internal_state = airspeed_internal_state;
     packet.airspeed_internal = airspeed_internal;
-    packet.accel_internal_state = accel_internal_state;
-    packet.accel_internal = accel_internal;
+    packet.imu_internal_state = imu_internal_state;
+    packet.imu_internal = imu_internal;
     packet.baro_internal_state = baro_internal_state;
     packet.baro_internal = baro_internal;
 
@@ -116,14 +116,14 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack(uint8_t system_
  * @param battery_internal [degC] Battery internal temperature
  * @param airspeed_internal_state  Airspeed sensor internal temperature status
  * @param airspeed_internal [degC] Airspeed sensor internal temperature
- * @param accel_internal_state  Accelerometer internal temperature status
- * @param accel_internal [degC] Accelerometer internal temperature
+ * @param imu_internal_state  IMU internal temperature status
+ * @param imu_internal [degC] IMU internal temperature
  * @param baro_internal_state  Barometer internal temperature status
  * @param baro_internal [degC] Barometer internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_status(uint8_t system_id, uint8_t component_id, mavlink_status_t *_status, mavlink_message_t* msg,
-                               uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t accel_internal_state, int8_t accel_internal, uint8_t baro_internal_state, int8_t baro_internal)
+                               uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t imu_internal_state, int8_t imu_internal, uint8_t baro_internal_state, int8_t baro_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_LEN];
@@ -131,8 +131,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_status(uint8_t 
     _mav_put_int8_t(buf, 1, battery_internal);
     _mav_put_uint8_t(buf, 2, airspeed_internal_state);
     _mav_put_int8_t(buf, 3, airspeed_internal);
-    _mav_put_uint8_t(buf, 4, accel_internal_state);
-    _mav_put_int8_t(buf, 5, accel_internal);
+    _mav_put_uint8_t(buf, 4, imu_internal_state);
+    _mav_put_int8_t(buf, 5, imu_internal);
     _mav_put_uint8_t(buf, 6, baro_internal_state);
     _mav_put_int8_t(buf, 7, baro_internal);
 
@@ -143,8 +143,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_status(uint8_t 
     packet.battery_internal = battery_internal;
     packet.airspeed_internal_state = airspeed_internal_state;
     packet.airspeed_internal = airspeed_internal;
-    packet.accel_internal_state = accel_internal_state;
-    packet.accel_internal = accel_internal;
+    packet.imu_internal_state = imu_internal_state;
+    packet.imu_internal = imu_internal;
     packet.baro_internal_state = baro_internal_state;
     packet.baro_internal = baro_internal;
 
@@ -169,15 +169,15 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_status(uint8_t 
  * @param battery_internal [degC] Battery internal temperature
  * @param airspeed_internal_state  Airspeed sensor internal temperature status
  * @param airspeed_internal [degC] Airspeed sensor internal temperature
- * @param accel_internal_state  Accelerometer internal temperature status
- * @param accel_internal [degC] Accelerometer internal temperature
+ * @param imu_internal_state  IMU internal temperature status
+ * @param imu_internal [degC] IMU internal temperature
  * @param baro_internal_state  Barometer internal temperature status
  * @param baro_internal [degC] Barometer internal temperature
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t battery_internal_state,int8_t battery_internal,uint8_t airspeed_internal_state,int8_t airspeed_internal,uint8_t accel_internal_state,int8_t accel_internal,uint8_t baro_internal_state,int8_t baro_internal)
+                                   uint8_t battery_internal_state,int8_t battery_internal,uint8_t airspeed_internal_state,int8_t airspeed_internal,uint8_t imu_internal_state,int8_t imu_internal,uint8_t baro_internal_state,int8_t baro_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_LEN];
@@ -185,8 +185,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_chan(uint8_t sy
     _mav_put_int8_t(buf, 1, battery_internal);
     _mav_put_uint8_t(buf, 2, airspeed_internal_state);
     _mav_put_int8_t(buf, 3, airspeed_internal);
-    _mav_put_uint8_t(buf, 4, accel_internal_state);
-    _mav_put_int8_t(buf, 5, accel_internal);
+    _mav_put_uint8_t(buf, 4, imu_internal_state);
+    _mav_put_int8_t(buf, 5, imu_internal);
     _mav_put_uint8_t(buf, 6, baro_internal_state);
     _mav_put_int8_t(buf, 7, baro_internal);
 
@@ -197,8 +197,8 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_chan(uint8_t sy
     packet.battery_internal = battery_internal;
     packet.airspeed_internal_state = airspeed_internal_state;
     packet.airspeed_internal = airspeed_internal;
-    packet.accel_internal_state = accel_internal_state;
-    packet.accel_internal = accel_internal;
+    packet.imu_internal_state = imu_internal_state;
+    packet.imu_internal = imu_internal;
     packet.baro_internal_state = baro_internal_state;
     packet.baro_internal = baro_internal;
 
@@ -219,7 +219,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_pack_chan(uint8_t sy
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_fc_t* aviant_indicator_temp_fc)
 {
-    return mavlink_msg_aviant_indicator_temp_fc_pack(system_id, component_id, msg, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->accel_internal_state, aviant_indicator_temp_fc->accel_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
+    return mavlink_msg_aviant_indicator_temp_fc_pack(system_id, component_id, msg, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->imu_internal_state, aviant_indicator_temp_fc->imu_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
 }
 
 /**
@@ -233,7 +233,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode(uint8_t syste
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_fc_t* aviant_indicator_temp_fc)
 {
-    return mavlink_msg_aviant_indicator_temp_fc_pack_chan(system_id, component_id, chan, msg, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->accel_internal_state, aviant_indicator_temp_fc->accel_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
+    return mavlink_msg_aviant_indicator_temp_fc_pack_chan(system_id, component_id, chan, msg, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->imu_internal_state, aviant_indicator_temp_fc->imu_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
 }
 
 /**
@@ -247,7 +247,7 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode_chan(uint8_t 
  */
 static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode_status(uint8_t system_id, uint8_t component_id, mavlink_status_t* _status, mavlink_message_t* msg, const mavlink_aviant_indicator_temp_fc_t* aviant_indicator_temp_fc)
 {
-    return mavlink_msg_aviant_indicator_temp_fc_pack_status(system_id, component_id, _status, msg,  aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->accel_internal_state, aviant_indicator_temp_fc->accel_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
+    return mavlink_msg_aviant_indicator_temp_fc_pack_status(system_id, component_id, _status, msg,  aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->imu_internal_state, aviant_indicator_temp_fc->imu_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
 }
 
 /**
@@ -258,14 +258,14 @@ static inline uint16_t mavlink_msg_aviant_indicator_temp_fc_encode_status(uint8_
  * @param battery_internal [degC] Battery internal temperature
  * @param airspeed_internal_state  Airspeed sensor internal temperature status
  * @param airspeed_internal [degC] Airspeed sensor internal temperature
- * @param accel_internal_state  Accelerometer internal temperature status
- * @param accel_internal [degC] Accelerometer internal temperature
+ * @param imu_internal_state  IMU internal temperature status
+ * @param imu_internal [degC] IMU internal temperature
  * @param baro_internal_state  Barometer internal temperature status
  * @param baro_internal [degC] Barometer internal temperature
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_aviant_indicator_temp_fc_send(mavlink_channel_t chan, uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t accel_internal_state, int8_t accel_internal, uint8_t baro_internal_state, int8_t baro_internal)
+static inline void mavlink_msg_aviant_indicator_temp_fc_send(mavlink_channel_t chan, uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t imu_internal_state, int8_t imu_internal, uint8_t baro_internal_state, int8_t baro_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_LEN];
@@ -273,8 +273,8 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send(mavlink_channel_t c
     _mav_put_int8_t(buf, 1, battery_internal);
     _mav_put_uint8_t(buf, 2, airspeed_internal_state);
     _mav_put_int8_t(buf, 3, airspeed_internal);
-    _mav_put_uint8_t(buf, 4, accel_internal_state);
-    _mav_put_int8_t(buf, 5, accel_internal);
+    _mav_put_uint8_t(buf, 4, imu_internal_state);
+    _mav_put_int8_t(buf, 5, imu_internal);
     _mav_put_uint8_t(buf, 6, baro_internal_state);
     _mav_put_int8_t(buf, 7, baro_internal);
 
@@ -285,8 +285,8 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send(mavlink_channel_t c
     packet.battery_internal = battery_internal;
     packet.airspeed_internal_state = airspeed_internal_state;
     packet.airspeed_internal = airspeed_internal;
-    packet.accel_internal_state = accel_internal_state;
-    packet.accel_internal = accel_internal;
+    packet.imu_internal_state = imu_internal_state;
+    packet.imu_internal = imu_internal;
     packet.baro_internal_state = baro_internal_state;
     packet.baro_internal = baro_internal;
 
@@ -302,7 +302,7 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send(mavlink_channel_t c
 static inline void mavlink_msg_aviant_indicator_temp_fc_send_struct(mavlink_channel_t chan, const mavlink_aviant_indicator_temp_fc_t* aviant_indicator_temp_fc)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_aviant_indicator_temp_fc_send(chan, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->accel_internal_state, aviant_indicator_temp_fc->accel_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
+    mavlink_msg_aviant_indicator_temp_fc_send(chan, aviant_indicator_temp_fc->battery_internal_state, aviant_indicator_temp_fc->battery_internal, aviant_indicator_temp_fc->airspeed_internal_state, aviant_indicator_temp_fc->airspeed_internal, aviant_indicator_temp_fc->imu_internal_state, aviant_indicator_temp_fc->imu_internal, aviant_indicator_temp_fc->baro_internal_state, aviant_indicator_temp_fc->baro_internal);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC, (const char *)aviant_indicator_temp_fc, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_MIN_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_LEN, MAVLINK_MSG_ID_AVIANT_INDICATOR_TEMP_FC_CRC);
 #endif
@@ -316,7 +316,7 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send_struct(mavlink_chan
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_aviant_indicator_temp_fc_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t accel_internal_state, int8_t accel_internal, uint8_t baro_internal_state, int8_t baro_internal)
+static inline void mavlink_msg_aviant_indicator_temp_fc_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t battery_internal_state, int8_t battery_internal, uint8_t airspeed_internal_state, int8_t airspeed_internal, uint8_t imu_internal_state, int8_t imu_internal, uint8_t baro_internal_state, int8_t baro_internal)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -324,8 +324,8 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send_buf(mavlink_message
     _mav_put_int8_t(buf, 1, battery_internal);
     _mav_put_uint8_t(buf, 2, airspeed_internal_state);
     _mav_put_int8_t(buf, 3, airspeed_internal);
-    _mav_put_uint8_t(buf, 4, accel_internal_state);
-    _mav_put_int8_t(buf, 5, accel_internal);
+    _mav_put_uint8_t(buf, 4, imu_internal_state);
+    _mav_put_int8_t(buf, 5, imu_internal);
     _mav_put_uint8_t(buf, 6, baro_internal_state);
     _mav_put_int8_t(buf, 7, baro_internal);
 
@@ -336,8 +336,8 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_send_buf(mavlink_message
     packet->battery_internal = battery_internal;
     packet->airspeed_internal_state = airspeed_internal_state;
     packet->airspeed_internal = airspeed_internal;
-    packet->accel_internal_state = accel_internal_state;
-    packet->accel_internal = accel_internal;
+    packet->imu_internal_state = imu_internal_state;
+    packet->imu_internal = imu_internal;
     packet->baro_internal_state = baro_internal_state;
     packet->baro_internal = baro_internal;
 
@@ -392,21 +392,21 @@ static inline int8_t mavlink_msg_aviant_indicator_temp_fc_get_airspeed_internal(
 }
 
 /**
- * @brief Get field accel_internal_state from aviant_indicator_temp_fc message
+ * @brief Get field imu_internal_state from aviant_indicator_temp_fc message
  *
- * @return  Accelerometer internal temperature status
+ * @return  IMU internal temperature status
  */
-static inline uint8_t mavlink_msg_aviant_indicator_temp_fc_get_accel_internal_state(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_aviant_indicator_temp_fc_get_imu_internal_state(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_uint8_t(msg,  4);
 }
 
 /**
- * @brief Get field accel_internal from aviant_indicator_temp_fc message
+ * @brief Get field imu_internal from aviant_indicator_temp_fc message
  *
- * @return [degC] Accelerometer internal temperature
+ * @return [degC] IMU internal temperature
  */
-static inline int8_t mavlink_msg_aviant_indicator_temp_fc_get_accel_internal(const mavlink_message_t* msg)
+static inline int8_t mavlink_msg_aviant_indicator_temp_fc_get_imu_internal(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_int8_t(msg,  5);
 }
@@ -444,8 +444,8 @@ static inline void mavlink_msg_aviant_indicator_temp_fc_decode(const mavlink_mes
     aviant_indicator_temp_fc->battery_internal = mavlink_msg_aviant_indicator_temp_fc_get_battery_internal(msg);
     aviant_indicator_temp_fc->airspeed_internal_state = mavlink_msg_aviant_indicator_temp_fc_get_airspeed_internal_state(msg);
     aviant_indicator_temp_fc->airspeed_internal = mavlink_msg_aviant_indicator_temp_fc_get_airspeed_internal(msg);
-    aviant_indicator_temp_fc->accel_internal_state = mavlink_msg_aviant_indicator_temp_fc_get_accel_internal_state(msg);
-    aviant_indicator_temp_fc->accel_internal = mavlink_msg_aviant_indicator_temp_fc_get_accel_internal(msg);
+    aviant_indicator_temp_fc->imu_internal_state = mavlink_msg_aviant_indicator_temp_fc_get_imu_internal_state(msg);
+    aviant_indicator_temp_fc->imu_internal = mavlink_msg_aviant_indicator_temp_fc_get_imu_internal(msg);
     aviant_indicator_temp_fc->baro_internal_state = mavlink_msg_aviant_indicator_temp_fc_get_baro_internal_state(msg);
     aviant_indicator_temp_fc->baro_internal = mavlink_msg_aviant_indicator_temp_fc_get_baro_internal(msg);
 #else
