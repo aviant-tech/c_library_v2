@@ -472,6 +472,73 @@ static void mavlink_test_aviant_indicator_temp_fc(uint8_t system_id, uint8_t com
 #endif
 }
 
+static void mavlink_test_aviant_indicator_c2_link(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_AVIANT_INDICATOR_C2_LINK >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_aviant_indicator_c2_link_t packet_in = {
+        963497464,963497672,17651,163,230,41,"NOPQRSTUVWXYZAB","DEFGHIJKLMNOPQR",204
+    };
+    mavlink_aviant_indicator_c2_link_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.bytes_sent = packet_in.bytes_sent;
+        packet1.bytes_recv = packet_in.bytes_recv;
+        packet1.rsrp_dbm = packet_in.rsrp_dbm;
+        packet1.state = packet_in.state;
+        packet1.rsrq_db = packet_in.rsrq_db;
+        packet1.sinr_db = packet_in.sinr_db;
+        packet1.freq_band = packet_in.freq_band;
+        
+        mav_array_memcpy(packet1.default_interface, packet_in.default_interface, sizeof(char)*16);
+        mav_array_memcpy(packet1.operator_name, packet_in.operator_name, sizeof(char)*16);
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_AVIANT_INDICATOR_C2_LINK_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_AVIANT_INDICATOR_C2_LINK_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_aviant_indicator_c2_link_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_aviant_indicator_c2_link_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_aviant_indicator_c2_link_pack(system_id, component_id, &msg , packet1.state , packet1.rsrp_dbm , packet1.rsrq_db , packet1.sinr_db , packet1.default_interface , packet1.operator_name , packet1.freq_band , packet1.bytes_sent , packet1.bytes_recv );
+    mavlink_msg_aviant_indicator_c2_link_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_aviant_indicator_c2_link_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.state , packet1.rsrp_dbm , packet1.rsrq_db , packet1.sinr_db , packet1.default_interface , packet1.operator_name , packet1.freq_band , packet1.bytes_sent , packet1.bytes_recv );
+    mavlink_msg_aviant_indicator_c2_link_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_aviant_indicator_c2_link_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_aviant_indicator_c2_link_send(MAVLINK_COMM_1 , packet1.state , packet1.rsrp_dbm , packet1.rsrq_db , packet1.sinr_db , packet1.default_interface , packet1.operator_name , packet1.freq_band , packet1.bytes_sent , packet1.bytes_recv );
+    mavlink_msg_aviant_indicator_c2_link_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("AVIANT_INDICATOR_C2_LINK") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_AVIANT_INDICATOR_C2_LINK) != NULL);
+#endif
+}
+
 static void mavlink_test_aviant_detailed_fc_state(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -610,6 +677,7 @@ static void mavlink_test_aviant(uint8_t system_id, uint8_t component_id, mavlink
     mavlink_test_aviant_indicator_fw_icing(system_id, component_id, last_msg);
     mavlink_test_aviant_indicator_temp_logger(system_id, component_id, last_msg);
     mavlink_test_aviant_indicator_temp_fc(system_id, component_id, last_msg);
+    mavlink_test_aviant_indicator_c2_link(system_id, component_id, last_msg);
     mavlink_test_aviant_detailed_fc_state(system_id, component_id, last_msg);
     mavlink_test_aviant_ats_status(system_id, component_id, last_msg);
 }
